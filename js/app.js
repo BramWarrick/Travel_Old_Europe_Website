@@ -786,7 +786,7 @@ var mapStyleValues = [{
   stylers: [{
     color: '#92998d'
   }]
-}]
+}];
 
 function initMap() {
 
@@ -804,17 +804,15 @@ function initMap() {
     styles: mapStyleValues
   });
 
+  loadMarkers(churches);
 
-  //Code modified from Google's provided animation example at:
-  //https://developers.google.com/maps/documentation/javascript/markers#animate
-  function toggleBounce() {
-    if (marker.getAnimation() !== null) {
-      marker.setAnimation(null);
-    } else {
-      marker.setAnimation(google.maps.Animation.BOUNCE);
-      setTimeout(toggleBounce, 3000);
+  function loadMarkers(file) {
+    // var parsed = JSON.parse(file);
+
+    for (var i = 0, site; site = file.results[i]; i++) {
+      addMarker(site.geometry.location.lat, site.geometry.location.lng, site.name);
     }
-  };
+  }
 
   function addMarker(lat, long, name) {
     marker = new google.maps.Marker({
@@ -823,11 +821,12 @@ function initMap() {
       position: {
         lat: lat,
         lng: long
-      }
-    })
+      },
+      //icon: markerImage
+    });
 
     addInfoWindow(marker, name);
-  };
+  }
 
   // addInfoWindow found at http://stackoverflow.com/questions/5868903/marker-content-infowindow-google-maps
   function addInfoWindow(marker, message) {
@@ -840,18 +839,6 @@ function initMap() {
     });
   }
 
-  function loadMarkers(file) {
-    // var parsed = JSON.parse(file);
-
-    for (var i = 0, site; site = file.results[i]; i++) {
-      addMarker(site.geometry.location.lat, site.geometry.location.lng, site.name);
-    }
-  };
-
-  loadMarkers(churches);
-
-  // var markerImage = 'marker.png';
-
   var contentString = '<div class="info-window">' +
     '<h3>Info Window Content</h3>' +
     '<div class="info-content">' +
@@ -859,30 +846,18 @@ function initMap() {
     '</div>' +
     '</div>';
 
-  var infowindow = new google.maps.InfoWindow({
-    content: contentString,
-    maxWidth: 400
-  });
+  //Code modified from Google's provided animation example at:
+  //https://developers.google.com/maps/documentation/javascript/markers#animate
+  function toggleBounce() {
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(toggleBounce, 3000);
+    }
+  }
 
-  // var markerImage = 'marker.png';
-
-  // addMarker(41.893732, 12.481686);
-
-  // marker = new google.maps.Marker({
-  //   map: map,
-  //   animation: google.maps.Animation.DROP,
-  //   position: {
-  //     lat: 41.893732,
-  //     lng: 12.481686
-  //   }
-  //   // icon: markerImage
-  // });
-
-  marker.addListener('click', function() {
-    infowindow.open(map, marker);
-  });
-
-  google.maps.event.addDomListener(window, 'load', initMap);
+  // google.maps.event.addDomListener(window, 'load', initMap);
 
 };
 
@@ -914,16 +889,16 @@ ko.applyBindings({
   }, ]
 });
 
-var nav = false
+var nav = false;
 
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
-  nav = true
+  nav = true;
 }
 
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0px";
-  nav = false
+  nav = false;
 }
 
 function toggleNav() {
