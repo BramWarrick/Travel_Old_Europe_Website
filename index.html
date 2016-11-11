@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Travel Roma</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="Travelling Rome" content="Page dedicated to exploring Rome." />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- <script type="text/javascript" src="http://www.panoramio.com/wapi/wapi.js?v=1&amp;hl=fr"></script> -->
+  </head>
+  <!-- To Do:
+  closeNav is not working due to incompatibility with bootstrap 
+    - only occured once moved google api link above app.js
+      - This fixed "google not found" error
+
+  -->
+
+  <body>
+
+    <span id="site-title" style="font-size:30px;cursor:pointer" onclick="toggleNav()">&#9776; Travelling Rome</span>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick='closeNav()'>&times;</a>
+      <div class='row'>
+        <div class='col-md-12'>
+          Categories
+        </div>
+      </div>
+      <div data-bind="foreach: category">
+        <div class='row'>
+          <div class='col-md-12'>
+            <a href="#" data-bind="text: categoryName"></a>
+          </div>
+        </div>
+      </div>
+      <p>
+    </div>
+
+    <div id="map"></div>
+
+    <!--
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5rdxfX_sDJf5PZfMAIYGb67EHYn50UJw&callback=initMap">
+    </script>
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/lib/knockout-3.4.0.js"></script>
+    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5rdxfX_sDJf5PZfMAIYGb67EHYn50UJw&libraries=places"></script>-->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5rdxfX_sDJf5PZfMAIYGb67EHYn50UJw&callback=initMap">
+    </script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,623 @@
+{
+   "html_attributions" : [],
+   "next_page_token" : "CpQCCAEAAARjMyEBeXQbhuF-PT3s3y2eGVUv41FhJKeIr6lj801mtMI2MYl7iRslCqUtnv0GNr2bxhVB1LuCbpXFsv4iCNYYYdy4-uF3iOGxX3EGB61Ehuu9m3HaNnnjGGVpTIvjiorJ7sBV9os4_ye2OQjVSmZFi5A7PZwfEXQWLcueXHhkT_TkE_1OjJvSFRZLwsba1DFo2yXBYrKlc3ya6cQaPieEJgzxlYEFavPrC2DhY3yZCXbx3qoCUovu9WivH0XwafrjLHm6H-OCy9UwUrA6rIjlhb4oCI8NXRw2JmFmA37s5VMQyUMhXwJLEPm31SKB1lDp92yiYnOfb_HLrtb5IJDABrX7APwezKYCIpMxMf_2EhCoZQMxz_2JLB_4haSkmtnzGhSh8Zl5kZlm2nHcFsoXmwh5hZ1_ag",
+   "results" : [
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.9000259,
+               "lng" : 12.4999314
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.90007865000002,
+                  "lng" : 12.4999831
+               },
+               "southwest" : {
+                  "lat" : 41.89992645,
+                  "lng" : 12.4997763
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "11de69bd3a09895dcb40220c08621559abda4ecc",
+         "name" : "GREEN LINE TOURS",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 960,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/103709278595912089527/photos\"\u003eGREEN LINE TOURS\u003c/a\u003e"
+               ],
+               "photo_reference" : "CoQBdwAAANeTxN_-00IGOPVo0p6kQHpc5uNs-wZDUBc-PlhF68dcSJ5Mf_yswTnGo-uFzUKYwL1xyCQmt-2JnJZ6q1RpIVpyy7U8G0ebAKAF6eWdde01tNxkpgvm49NsmPVwBSn8Xm2Fu9RLqbxULN0-_ozPB3vjDXaucv_abXnAJwQ9YlI9EhBeK7DT5aCObW1JwT8P5ui2GhSnyc3ihqgvQCgTSWwpaa86OWmdRw",
+               "width" : 960
+            }
+         ],
+         "place_id" : "ChIJG1eGa6RhLxMRQmZnoo8jQJE",
+         "rating" : 1.8,
+         "reference" : "CmRSAAAACmjiSYsX_XEG0JeaJ6FrgcBjZQMNwPsiRKDdGeC71CvKhy301dnUftvXx7s5dH05jDt1CKpyjxAULASU0d1Xo-hNalHW1JpvDefTOhqvopVJCvqkO2iRjw1Re4Lrc7wOEhC8UUL1dKu-oHYFHJ22Y2gyGhSKncf98sFzE3NZSilpet63Sp11PA",
+         "scope" : "GOOGLE",
+         "types" : [ "travel_agency", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 32, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.9000259,
+               "lng" : 12.4999314
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.90006304999999,
+                  "lng" : 12.4999726
+               },
+               "southwest" : {
+                  "lat" : 41.89991445000001,
+                  "lng" : 12.4998078
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "76fab8d063cf642e612c79e0d3d71bd42a8c0364",
+         "name" : "Escritorio Tours",
+         "place_id" : "ChIJP5XOFKRhLxMRp3nnHl4y2E4",
+         "reference" : "CmRRAAAA8z1F39a3_9kp0_xPRSsLFVSgCkE93a_4DBesyztoBwvI--artG_Bs7X4ljpc71KsGrOYPLc8ryDjBglcZ6Vz8JP4-ZStaAee_dif-JSi0kXem35yyU3QJ6dsg7EYE9jmEhBSkZgKjV0KdeqcrpLz-nbqGhReCeVbzjU1AQGoGc8WQGrWEXRu0w",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "00185, Via Giovanni Amendola, 32, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.9000677,
+               "lng" : 12.4998493
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.90011569999999,
+                  "lng" : 12.49990495
+               },
+               "southwest" : {
+                  "lat" : 41.89996090000001,
+                  "lng" : 12.49972635
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+         "id" : "ede0a898936069c9097d70cdb820d7b63f1654a3",
+         "name" : "Coccia S.r.l.",
+         "photos" : [
+            {
+               "height" : 3120,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/107125617382700263875/photos\"\u003eRené Vaněk\u003c/a\u003e"
+               ],
+               "photo_reference" : "CoQBdwAAAGAs9opLSi8bEDaZ5-k6ff4pNvy4R1BQv7hl2i4R9xS_LE6G9_HsXgWr29R92ug7kDFM_PlSugV8fGTn2kZTxV3egzvoiaqES3uOUNNfQF6pEtj1bABEpz7yAqLURT5fuP-CvQmZW3F4xic9vw46QRi8T8YLmGxT6nPR28LXh6UREhA2hw6Ovt5KTlAToBRBbPkTGhTb65zypSHF7htAsxDOm4a0grUWAA",
+               "width" : 4160
+            }
+         ],
+         "place_id" : "ChIJU2QFa6RhLxMRBJLmfzpr9UY",
+         "reference" : "CmRRAAAAACC2Igw0dcmOhKdCRoF1sSvGOEnbqdCIhNgchgqUYYnM5unynWpPIY2c70aFch9OtJEw8M97HqVqXTbuNWYHTx1a9p4e-zXxKMueSwsxrsTLZw44NPURn3Py-_UqwYpPEhDFYTtSe3ECsMLOO6K6gvYXGhThs5jiJWfOkalbVy8o_aMn4adpOA",
+         "scope" : "GOOGLE",
+         "types" : [
+            "grocery_or_supermarket",
+            "food",
+            "store",
+            "point_of_interest",
+            "establishment"
+         ],
+         "vicinity" : "Via Giovanni Amendola, 30, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.899867,
+               "lng" : 12.4999779
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.8998945,
+                  "lng" : 12.5000083
+               },
+               "southwest" : {
+                  "lat" : 41.8997973,
+                  "lng" : 12.4999007
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "beba499e9edb7a1ac3240ed0dd41676cf066e33c",
+         "name" : "Hair Style - Parrucchiere",
+         "photos" : [
+            {
+               "height" : 3840,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/105662616789211303940/photos\"\u003eCraig Matadeen\u003c/a\u003e"
+               ],
+               "photo_reference" : "CoQBdwAAAHyPc9nMRHr-goyH5RNWALQDtVp8xR1XGRFyS_Y7wRIqY-r7PeqqG7fPZfPJhzup2Bdirenw-z4b36TWZoxXWQUe-ls-44N7Tx02RJiZcnjdq7Qt76CZrbSghjubTanCtQMMXCmrZ2HWHZ8QV-GeXQvvcxwcShlAqEdGlwnGFyaVEhDhUG3ftiz-yBb3jsX6TLM5GhQ9pAV6_whbemJgCW04S8F-HYFHLg",
+               "width" : 2160
+            }
+         ],
+         "place_id" : "ChIJA-xza6RhLxMR0iDAcpstE8Q",
+         "reference" : "CmRSAAAAvjJiHM0jQxjkqMEfoP7QMI4O_s5YVca58Fq-uvbu6_Ixcg7SoLci9uIW3S-ntz9lyYsPt3uT47z4cLH_CSolJoMltGpXbfcmeSAbbFyq9Q-VHVc1VOZcqMQ7GZ1qIMWfEhCmNQj3wbXUBfnSlDVL-mG0GhTIkEEKkt_mJ0oYsl0SRXdIzIxsqg",
+         "scope" : "GOOGLE",
+         "types" : [ "hair_care", "health", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 65, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.8998789,
+               "lng" : 12.4998554
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.89994409999999,
+                  "lng" : 12.49992775
+               },
+               "southwest" : {
+                  "lat" : 41.89984690000001,
+                  "lng" : 12.49981995
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+         "id" : "eba0d01e1667aa3985f16d54c16c8666b49e0873",
+         "name" : "San Giorgio",
+         "place_id" : "ChIJw7lXaqRhLxMROZx6Oeadarg",
+         "reference" : "CmRSAAAACJ9sk3nlsM4mfDLp34FUdF6_-713uiqTS2YJu4ak9uLnfWM0BfrNMqLvu-JvhSdC5yqfoj2N5s5aVi7sF1eYiBYDiweQzNWs9drTE1kyaSuDTOipShS-6RNz7Tkwv2J8EhCBSocJMxhLytOXLUmE90ISGhT_7OtSOpe9dpWmwawEvZsbA5cqlw",
+         "scope" : "GOOGLE",
+         "types" : [ "lodging", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 61, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.89982509999999,
+               "lng" : 12.5000254
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "59aa980a23eb5441c500ef75bbbf0aaf34703fb5",
+         "name" : "UNA",
+         "place_id" : "ChIJ592Da6RhLxMR4xprhabAKcA",
+         "reference" : "CmRSAAAAnGS3A3pFRiWysYo596q_Sz33IFFLK6eo1Dpp8jRE26zh7nTJLmt0U6yATG_6_4CdIjeTB311NA6Sa9LlEKokHDnrmJSMk2mpHxk3zGYhJktWK_bGWXNb_EzbxQMJ2xFsEhAcCFy8OZp2C3s4unv0yFVcGhSKoN-ppbtZsDFtR5Hg6NFZvzZI3A",
+         "scope" : "GOOGLE",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 67, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.9000202,
+               "lng" : 12.5002539
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.90034555,
+                  "lng" : 12.50067975
+               },
+               "southwest" : {
+                  "lat" : 41.89991175,
+                  "lng" : 12.50011195
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+         "id" : "b6282c59fcdd7b3d574f46c09710b092cb1347c9",
+         "name" : "Oh my Gold",
+         "place_id" : "ChIJQdLEDaRhLxMRroqTvLOYre0",
+         "reference" : "CmRSAAAASUdIFh171UbZoe2MHeFq-O-iG_WX_c_U8igH55OsCBC-utDr9S1f8bI1RGUitNXyh4vhZLOhml7vo9s4SNBSPjvdP8of4NZKChUTJQCjW2IXh0uyMlz7pV8I3lbKflpVEhCPxFZKBMOjwxpIuiht4mrVGhTKhJ8_BANQT6nKy2vEhptcfoRnHA",
+         "scope" : "GOOGLE",
+         "types" : [ "jewelry_store", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Daniele Manin, 9, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.9000285,
+               "lng" : 12.4997239
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.90010124999999,
+                  "lng" : 12.49980475
+               },
+               "southwest" : {
+                  "lat" : 41.90000425,
+                  "lng" : 12.49969695
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "6dda603663393009c1b23fcc0a8b9920968f53b8",
+         "name" : "King Food Termini Srls",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJISdTFaRhLxMRpM6P0_YdEXY",
+         "reference" : "CmRRAAAAm7roFy2WMjYzTyQVX1PEgk4ruBmFG6hEIVd3RnM2XiSl_8k0c_A3G6IrHqWXfkrvK18eL8EwviTPjkZqJpF7ZNJNVsVzFx1xlMA79J8AL80nE-mD0Ju7gZ3X7fH3eVhbEhD8LEJbqfFl5D0Zm_2e8M55GhSzIKtQEyklVbv27C7APSPhglk73A",
+         "scope" : "GOOGLE",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 26, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.8997994,
+               "lng" : 12.5000966
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.899826,
+                  "lng" : 12.50011925
+               },
+               "southwest" : {
+                  "lat" : 41.8997196,
+                  "lng" : 12.50002865
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "1e6a3c26d3a887807aa246a25aae45a6bdbe0582",
+         "name" : "Imperium Ristorante",
+         "photos" : [
+            {
+               "height" : 2988,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/104274629380190552450/photos\"\u003eScott Cohen\u003c/a\u003e"
+               ],
+               "photo_reference" : "CoQBdwAAAEsOSbBJILL-bi4jljypNmTQD-5NR143gBev9GDBuK0UvOa4bK_n89vwfXS8QuJbMUO7hZZL3TUY8oDBhc-fY6UZPGg_uon8gh35nzfyD2RPooJdI0s7WE05jYJfjFbt8IsqbYXbutbMA8w9zfkLXL1sk0zg4bFYaJRooHsYdoPbEhBzZCmj-UMibh0h1qdjE9EmGhSWKw1HsJMR-8HwajqvkugrmES6jw",
+               "width" : 5312
+            }
+         ],
+         "place_id" : "ChIJwTBlbKRhLxMR6C4D8XDqOcY",
+         "rating" : 4,
+         "reference" : "CmRSAAAAZV0RbeaETxXGwrL47xXj_krw4RE8WDDX_wZTFkMMU8cH4E9S72jVDH_DgpCQf-D34cPEBb6nNhj4EpBdcqQNGkNILhniL7gtut5tbLK_5ppFfPpG1vnakOIjPmZxWk-WEhDn8RD6iSrxHLqx-TIAnOa-GhQnP9KunRzOvwcJES63NuueksVHjg",
+         "scope" : "GOOGLE",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 71, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.89990459999999,
+               "lng" : 12.5003054
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.8999584,
+                  "lng" : 12.5003482
+               },
+               "southwest" : {
+                  "lat" : 41.89987839999999,
+                  "lng" : 12.5002174
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "dbf50b4a0faa078ca85208d9d6be6672ca9bac4a",
+         "name" : "Broast Burgeri",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 1944,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/108668465301424279687/photos\"\u003eJames Alexander Ince Sekitoleko Kiggundu\u003c/a\u003e"
+               ],
+               "photo_reference" : "CoQBcwAAABh7VINpu8HjUtCX93or_movXXuqwKzes5qZf089og_x2WkEvoWE8a-siguIFzqb9tdMJ-n2XCHfdyXQflrKDMVGBGExjU5svx_SpY7ite3TheViuXWZtqNcrgplBAydkOvu75jSJ6s9wtBhC0wLTqYmtZ_VpZit4IJTm0SZOz3AEhD9-LhaX7Ww1rcEj6uushJLGhSKKBV13tkIuOL_laqiqyfsV65J0Q",
+               "width" : 2592
+            }
+         ],
+         "place_id" : "ChIJaUHJ-aRhLxMRgZt7qHxBNLA",
+         "rating" : 4,
+         "reference" : "CmRSAAAA8UxYhNrFujWFqLFWmqyFmdXP7N4TnL4zp2DzxzxT2wD9dV_DvjDXVb-4I-eOfVbXpz_TCS_bc1jWqH11HTpQeVvXlZbDhJUbdAmUWA5lOjwhjmYkeyRtBIsGRQVQrcNeEhAKZSOjsLG2mgxXG6lXg7tAGhRyilcbfqkQKjaKd5Qs-OCuLtywRQ",
+         "scope" : "GOOGLE",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Daniele Manin, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.89974909999999,
+               "lng" : 12.5000707
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.899778,
+                  "lng" : 12.50015415
+               },
+               "southwest" : {
+                  "lat" : 41.8996976,
+                  "lng" : 12.50002395
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "a2039955618bd7a9f19d7dfbf0b38e2013370d87",
+         "name" : "Gianmarco Giordano",
+         "place_id" : "ChIJwX4LbKRhLxMRwS_fcouoCLk",
+         "reference" : "CmRSAAAA7mjAP3Q7BUv_gtFSoH0pkRzOvwBBdAHmZrIAmC90uzzu9bAHocR0j3d7InWxmKdSxRPsvscTIwkZWkbOv7y83KCNILVjeyduxYrXqoO774qX9hljHRV9nlycAPzNiA3sEhDUG1bX_iyOe2IAfrAGBut6GhTlRJh3lmfOhgA_m5V0FVYw_vntUA",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "Via Daniele Manin, 21, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.9001338,
+               "lng" : 12.500307
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.900166,
+                  "lng" : 12.50045015
+               },
+               "southwest" : {
+                  "lat" : 41.9000436,
+                  "lng" : 12.50024995
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "4d8ac7e38727b4d328a6ff124fea8d757df76ebd",
+         "name" : "Tufano Pietro",
+         "place_id" : "ChIJYTXGDaRhLxMR48JA8MM-I3Y",
+         "reference" : "CmRRAAAAoCV01Vei43Pkhh1CNipNaM9LNPIYdfYHB-bOtreIvu1T9ax4oy1TIQtIs0p3fHWKGOCePfPmGXv_0MN6JonKyNhcUuuGo21du2cHURKRh_ehy8i3frZ_CEev4nAsh0TrEhCnzLsQlQ5_6N1OAsYJTt4pGhTf_dAHld9kT9NG8VXAmScuoT0UpA",
+         "scope" : "GOOGLE",
+         "types" : [ "bar", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Daniele Manin, 5, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.8998425,
+               "lng" : 12.499711
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.9000162,
+                  "lng" : 12.5000146
+               },
+               "southwest" : {
+                  "lat" : 41.8997846,
+                  "lng" : 12.4996098
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+         "id" : "4b17bcb816702bd67efeccc9b4b39fedfa173187",
+         "name" : "UNA Hotel Roma",
+         "photos" : [
+            {
+               "height" : 2988,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/105622894394654712868/photos\"\u003e최재승\u003c/a\u003e"
+               ],
+               "photo_reference" : "CoQBdwAAANuD7b1eMCWmjGZfPin7I5iAhPdMYWwXlRWjx2DZ3bP0zzWuhNIr9ftxVMu3bcN5_wd9_QEBEfXkoa7zL1piKOTMHDnoNz8IBNQTHFKaicwMlQv2OrJnJako8lratUJxv9MpKlyKErKBY6cZa3pVRKNFeEVBhw6Wv9PkpsnVY_vTEhDiYYqopdS7c1fDilOKnb4aGhQELKNM9Okue-4ZaG2UvGJUgYd8Ww",
+               "width" : 5312
+            }
+         ],
+         "place_id" : "ChIJk6d0a6RhLxMRVH_wYTNrTDQ",
+         "rating" : 4.4,
+         "reference" : "CmRRAAAAPLJmnraLDijT3QQlMJxNKRW3u3vLFu3-FhktNFXNjSG_1YSEHynBrFE1HBtjifUU5dAGrUZDcAl_Yh-AbmeBEcayBVWqZksakymtevwmxz9QTrhvGzeES2vn6Pdq5iiZEhBujTGfnYcDFiQwGE-sMRg_GhQjVwxUCivxcm1HTJif-jfmD1JB-A",
+         "scope" : "GOOGLE",
+         "types" : [ "lodging", "restaurant", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 57, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.8998415,
+               "lng" : 12.5002909
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "425f8faac357b2d7af09c740b35bfef72b81b467",
+         "name" : "Super Market Multi Market",
+         "place_id" : "ChIJV2gObaRhLxMRPrOqdK8jtIw",
+         "reference" : "CmRSAAAAvGW67I8kOzQdM5EhgDVWIerNXTLl6TN1OQxYvu9S14bG2LP2Z47Ek44ABxCpWYmefeqWd70e-gPUEw7I7AHJg5q82T1d4TdIQ8tBRl9NI4a2qZ5kjcwtEYlJaW7NmgATEhD90NUa_4KanGBi6XyLh0CmGhS-uH-gre4GqqcJZ3ZdfDI6tvcgGA",
+         "scope" : "GOOGLE",
+         "types" : [ "point_of_interest", "establishment" ],
+         "vicinity" : "Italy"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.9001604,
+               "lng" : 12.5003037
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.90020745,
+                  "lng" : 12.5004351
+               },
+               "southwest" : {
+                  "lat" : 41.90001925,
+                  "lng" : 12.5002599
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "772043f3247cab80cb69c7c3314d25b36144b779",
+         "name" : "Gusto Napoli",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 3059,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/112765117305729018924/photos\"\u003eMilestone TV\u003c/a\u003e"
+               ],
+               "photo_reference" : "CoQBdwAAAAkBiT_TuavH6M6Aszo1w7i8R8B5mmoBD65REkhGzH7FGXnwpwh-2A6unBLD_bPl2E1Y8susrWrBfnQc9QUFw-9d1csprA5AzLvRtFG-63nAs8zp_V2x9rqZNT0Vhs9aoo-_8hreUWQCQfTxwSZ3CCW7DiwtE1UGHr5LEXmco0YDEhAVIopIh3d6VH-13bTZHGHAGhQ1IwBBBvavGae5T6JacMwCqhXFvg",
+               "width" : 2448
+            }
+         ],
+         "place_id" : "ChIJCzDXBKRhLxMREi2PK4Jl-SE",
+         "reference" : "CmRRAAAAn6QPnXJ4OP6OI5e6EIgjyuiXKYmwXwCQMH3Lat7fIZpmbsuqlwYoR-NJBW3CafzGD5jWw8ZFBct6ssQDjzQB1i0KNt45f1ru2NKPQqVwLUaj0LVnEHSavQ03sEkMLLgVEhAeVN1E3AJ33K8OoD-K2XA6GhRVxnRIeR6vvw0mdNfKiElEXYpJTQ",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Daniele Manin, 5a/7, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.89973099999999,
+               "lng" : 12.5001083
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.8998246,
+                  "lng" : 12.50020325
+               },
+               "southwest" : {
+                  "lat" : 41.89969979999998,
+                  "lng" : 12.50007664999999
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+         "id" : "d9aed223b5c66b35bfc43b36deabe90176458f53",
+         "name" : "Seconda Srl",
+         "place_id" : "ChIJS5pnbKRhLxMR6gtem-pVP9I",
+         "reference" : "CmRSAAAAVY5j3ncpXSRZo1uRzHyhP3KG7uHhl5wJ0fJ0KiwcFulYvGqy3j445-uJSK5ALKwDzqYmTqJvBRzByXOfC-1TUICwJyQFQpgPdzpPGZc5o_4hndm5nVM1zGNoeXrQHnoYEhCJASHPPNIvhr60knZ6wIN9GhQk4Syk0CYyddU2FQG7CXSTcGFP5w",
+         "scope" : "GOOGLE",
+         "types" : [ "lodging", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 77, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.8997317,
+               "lng" : 12.5001153
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+         "id" : "485ed8d0c06200235b310179892f4e1dbbb657e5",
+         "name" : "IMPERIUM",
+         "place_id" : "ChIJH1IRbKRhLxMRoJc3skUihGs",
+         "reference" : "CmRRAAAAwuXwOR2PBXBqc1Ot4iwCJwgTchqzimtdwgQ6S-iliJfTC0fEDpscPDjiAVVZwLqyTQ2K8OaR7UA85YyOJMDG6H-Yd1xdDorfcTtuCkzRtVib8PVzy4BdCM8gTtH-DBIKEhCHr4RFd5awXugBakon6h77GhQ2gg4uGeURlzxYfeLYNejj3d9xuQ",
+         "scope" : "GOOGLE",
+         "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Manin Daniele, 71, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.89996919999999,
+               "lng" : 12.5003854
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.9000266,
+                  "lng" : 12.5004267
+               },
+               "southwest" : {
+                  "lat" : 41.89994420000001,
+                  "lng" : 12.5002907
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "49cf8f51e57f4b71378e6d0123024ff1c22862c5",
+         "name" : "Lo Presti Santo",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJ9wesEqRhLxMRSgUobSsO7gA",
+         "reference" : "ClRQAAAASQOLfWxoF4Bo8il0wkRlCe2SrUMd-8xlPlqnHpKYGbNWFVAPsp08DPk_ZnsZ8TMK5u14e1v3cTBbOFe-vYkzGUATXZ-IuMk8NZF8i4qVFP0SEKWi3jDCpA1ws9muZsYzV_saFN4yYQ7BXWVnKDN2XDE6YkTKyeci",
+         "scope" : "GOOGLE",
+         "types" : [
+            "bakery",
+            "restaurant",
+            "food",
+            "store",
+            "point_of_interest",
+            "establishment"
+         ],
+         "vicinity" : "Via Daniele Manin, 11, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.8998051,
+               "lng" : 12.5002985
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.89983965000001,
+                  "lng" : 12.50033225
+               },
+               "southwest" : {
+                  "lat" : 41.89970144999999,
+                  "lng" : 12.50019725
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+         "id" : "ed2390a2c22a2a8c9a3c8a975f013654b0d08d59",
+         "name" : "Nasha print,fotocopies and phone",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "place_id" : "ChIJZbegbaRhLxMRTh4a9I4mHHE",
+         "reference" : "CmRRAAAAskJjkiP02w4eeBMZqiBkWXZNrEoV84OF2tTSa8RBSW8mYIzdYCmSDfAqYROCIrz6PIguvpbNSaTqeEWFlVrwSwnyo6zQRrugNKr-80mTO_C_7UhleJ5VPqJU_hE01iDFEhDCIvoLCVw6xKjj4F-K5kdhGhQcXxvil0tr3yrpKwVtjIH8slY_dw",
+         "scope" : "GOOGLE",
+         "types" : [ "store", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 40, Roma"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 41.8997049,
+               "lng" : 12.5001528
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.89979954999998,
+                  "lng" : 12.5002488
+               },
+               "southwest" : {
+                  "lat" : 41.89967335,
+                  "lng" : 12.5001208
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "07e68933646964f8f48c673a220cdcb8d76b31b8",
+         "name" : "Da Luciano",
+         "opening_hours" : {
+            "open_now" : false,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 3120,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/108540657033958682674/photos\"\u003eNem Bog\u003c/a\u003e"
+               ],
+               "photo_reference" : "CoQBdwAAAMOCvdkQxTnCebsg4PRIQlQZodAQmFDmOe22mXl7tFgTnMQZ4Ffzlevm_mgP9wAqXcoOwdBLPIL_WgOwDwoZp4TuNKsjQ5X_C_bQ0HhDYE-2JcsR09PAoACNXXizBWB7ksIXy1Ju7CWOdTqodfvfk5h-qgfbgose63d5ZdG9duxUEhATSjzp6JtF7T20noBlYZscGhQJn1MYLGCU9v0h3hbf9OCWRzNLSQ",
+               "width" : 6274
+            }
+         ],
+         "place_id" : "ChIJxz0jbKRhLxMRzekqGpYtVeg",
+         "rating" : 3.9,
+         "reference" : "CmRSAAAATabwedRfuLxuNkiaCx42rnnDI_giN3UO35bXkOensfol6oFxKa0tkNxx3FobX4GYgpLUiMZkAyH7F8Z7GPeARM3zPXrIoInTTo-gAUTODCPULYqVgkOnKkeCcEA-SjWREhDw_HbbuNM1-kCftwfrwlSjGhSicvkVqcy1y5bEdkjvV84CeUERyQ",
+         "scope" : "GOOGLE",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Via Giovanni Amendola, 73, Roma"
+      }
+   ],
+   "status" : "OK"
+}
