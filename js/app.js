@@ -788,6 +788,19 @@ var mapStyleValues = [{
   }]
 }];
 
+// // To Do:
+// Retrieve google maps json for places/location_types
+// Parse Google's json file
+// Feed that into the logic for creating markers
+// Limit json to the scope of lat/lng in the map window
+
+// Review rubric - ensure no unnecessary scope creep and that plans are true to spec
+
+// // API/Info Window
+// Retrieve Wikipedia link for location - where available
+// Retrieve Panoramio link for location - where available
+// Display one Panoramio picture in InfoWindow, if not present, check google for one, if still not present, omit.
+
 function initMap() {
 
   // Styles the map for a more vintage appearance
