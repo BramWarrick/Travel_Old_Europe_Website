@@ -833,9 +833,13 @@ function initMap() {
 
   // Styles the map for a more vintage appearance
   var map = new google.maps.Map(document.getElementById('map'), {
+    // center: {
+    //   lat: 41.893732,
+    //   lng: 12.481686
+    // },
     center: {
-      lat: 41.893732,
-      lng: 12.481686
+      lat : 41.9002108,
+      lng : 12.5015261
     },
     zoom: 16,
     styles: mapStyleValues
@@ -864,10 +868,14 @@ function initMap() {
   })};
 
   function loadMarkers(file) {
-    var parsed = JSON.parse(file);
+    // var parsed = JSON.parse(file);
 
-    
+    for (var i = 0, site; site = file.results[i]; i++) {
+           addMarker(site.geometry.location.lat, site.geometry.location.lng);
+         }
   };
+
+  loadMarkers(churches);
 
   // var markerImage = 'marker.png';
 
@@ -885,7 +893,7 @@ function initMap() {
 
   // var markerImage = 'marker.png';
 
-  addMarker(41.893732, 12.481686);
+  // addMarker(41.893732, 12.481686);
 
   // marker = new google.maps.Marker({
   //   map: map,
