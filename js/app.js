@@ -203,13 +203,13 @@ var map;
 var infoWindow;
 var service;
 var markers = [];
-var type = 'church';
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
-      lat: 41.9002108,
-      lng: 12.5015261
+      lat: 41.88973272,
+      lng: 12.49120496
+
     },
     zoom: 16,
     styles: mapStyleValues
@@ -218,21 +218,51 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow();
   service = new google.maps.places.PlacesService(map);
 
+  performKeywordSearch('Tourist Destination');
+
   // The idle event is a debounced event, so we can query & listen without
   // throwing too many requests at the server.
-  map.addListener('idle', performSearch);
+  // map.addListener('idle', performTypeSearch);
 }
 
-function performSearch(type) {
+function performTypeSearch(type) {
   deleteMarkers();
 
   var request = {
     bounds: map.getBounds(),
+    language: 'en',
+    rankBy: google.maps.places.RankBy.PROMINENCE,
     types: [type]
   };
   console.log(request)
   service.nearbySearch(request, callback);
 }
+
+
+function performKeywordSearch(keyword) {
+  deleteMarkers();
+
+  var request = {
+    bounds: map.getBounds(),
+    language: 'en',
+    rankBy: google.maps.places.RankBy.PROMINENCE,
+    keyword: [keyword]
+  };
+  console.log(request)
+  service.nearbySearch(request, callback);
+}
+
+// deleteMarkers is an adaptation of code found:
+// https: developers.google.com/maps/documentation/javascript/examples/marker-remove
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+  markers = [];
+}
+
 
 function callback(results, status) {
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -241,32 +271,13 @@ function callback(results, status) {
   }
   console.log(results);
   for (var i = 0, result; result = results[i]; i++) {
-    addMarker(result);
+    if (result.rating > 4) {
+      addMarker(result);
+    }
   }
 }
 
-// Sets the map on all markers in the array.
-function setMapOnAll(map) {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(map);
-  }
-}
 
-// Removes the markers from the map, but keeps them in the array.
-function clearMarkers() {
-  setMapOnAll(null);
-}
-
-// Shows any markers currently in the array.
-function showMarkers() {
-  setMapOnAll(map);
-}
-
-// Deletes all markers in the array by removing references to them.
-function deleteMarkers() {
-  clearMarkers();
-  markers = [];
-}
 
 function addMarker(place) {
   marker = new google.maps.Marker({
@@ -284,9 +295,13 @@ function addMarker(place) {
           return;
         }
 
+        console.log(result);
+
         var contentString = '<div class="info-window">' +
           '<h3>' + result.name + '</h3>' +
           '<div class="info-content">' +
+          '<p>Rating:   ' + result.rating + '</br>' +
+          'Website:   <a href="' + result.website + '" target="_blank">' + result.website + '</a></br>' +
           '<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>' +
           '</div>' +
           '</div>';
@@ -326,32 +341,45 @@ function newInfoWindow(marker, place) {
   });
 }
 
-categoryViewModel =  {categories: [{
+categoryViewModel = {
+  categories: [{
     id: 1,
     categoryName: 'Recommended',
-    link: ''
+    link: function() {
+      performKeywordSearch('Tourist Destination');
+    }
   }, {
     id: 2,
     categoryName: 'Churches',
-    link: function() {performSearch('church');}
+    link: function() {
+      performKeywordSearch('Catholic Church');
+    }
   }, {
     id: 3,
-    categoryName: 'Points of Interest',
-    link: function() {performSearch('point_of_interest');}
+    categoryName: 'Lodging',
+    link: function() {
+      performTypeSearch('lodging');
+    }
   }, {
     id: 4,
     categoryName: 'Museums',
-    link: function() {performSearch('museum');}
+    link: function() {
+      performTypeSearch('museum');
+    }
   }, {
     id: 5,
     categoryName: 'Restaurants',
-    link: function() {performSearch('restaurant');}
+    link: function() {
+      performTypeSearch('restaurant');
+    }
   }, {
     id: 6,
     categoryName: 'Grocery',
-    link: function() {performSearch('museum');}
-  }
-]}
+    link: function() {
+      performTypeSearch('museum');
+    }
+  }]
+}
 
 ko.applyBindings({
   categoryViewModel
@@ -372,3 +400,31 @@ function closeNav() {
 function toggleNav() {
   nav ? closeNav() : openNav();
 }
+
+// function getWikiInfo(site) {
+
+//   // var wikiRequestTimeout = setTimeout(function(){
+//   //     $wikiElem.text("Failed to get Wikipedia resources");
+//   // }, 8000);
+
+//   // Using jQuery
+
+//   remoteUrlWithOrigin ="https://en.wikipedia.org/w/api.php?&action=query&prop=extracts&exintro=&explaintext=&titles=" + site
+//     + "&format=json&redirects=1&callback=wikiCallback";
+
+//   $.ajax( {
+//       url: remoteUrlWithOrigin,
+//       dataType: 'jsonp',
+//       success: function(data) {
+//       var result = data[1];
+
+//       for (var i = 0; i < articleList.length; i++) {
+//         articleStr = articleList[i];
+//         var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+//         $wikiElem.append('<li><a href="' + url + '">' + articleStr + '<a/></li>');
+//       };
+
+//       // clearTimeout(wikiRequestTimeout);
+//       }
+//   });
+// ]
