@@ -6,3 +6,4 @@
 # Light linting pass
 # Added google maps places library to index.html
 # Added ToDo to app.js
+# Place call; InfoWindows
