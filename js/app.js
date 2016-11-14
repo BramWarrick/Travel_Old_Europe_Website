@@ -202,7 +202,8 @@ var mapStyleValues = [{
 var map;
 var infoWindow;
 var service;
-var type = 'church'
+var markers = [];
+var type = 'church';
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -223,6 +224,8 @@ function initMap() {
 }
 
 function performSearch(type) {
+  deleteMarkers();
+
   var request = {
     bounds: map.getBounds(),
     types: [type]
@@ -240,6 +243,29 @@ function callback(results, status) {
   for (var i = 0, result; result = results[i]; i++) {
     addMarker(result);
   }
+}
+
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setMapOnAll(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+  setMapOnAll(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
 }
 
 function addMarker(place) {
@@ -270,6 +296,8 @@ function addMarker(place) {
       });
     };
   })(marker, place, infoWindow));
+
+  markers.push(marker);
 }
 
 // addInfoWindow modified from code found at:
@@ -298,31 +326,32 @@ function newInfoWindow(marker, place) {
   });
 }
 
-categoryViewModel =   [{
+categoryViewModel =  {categories: [{
     id: 1,
     categoryName: 'Recommended',
     link: ''
   }, {
     id: 2,
     categoryName: 'Churches',
-    link: "performSearch('church')"
+    link: function() {performSearch('church');}
   }, {
     id: 3,
     categoryName: 'Points of Interest',
-    link: "function() {performSearch('point_of_interest')}"
+    link: function() {performSearch('point_of_interest');}
   }, {
     id: 4,
     categoryName: 'Museums',
-    link: ''
+    link: function() {performSearch('museum');}
   }, {
     id: 5,
     categoryName: 'Restaurants',
-    link: ''
+    link: function() {performSearch('restaurant');}
   }, {
     id: 6,
     categoryName: 'Grocery',
-    link: ''
-  }, ]
+    link: function() {performSearch('museum');}
+  }
+]}
 
 ko.applyBindings({
   categoryViewModel

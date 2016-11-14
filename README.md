@@ -7,3 +7,4 @@
 # Added google maps places library to index.html
 # Added ToDo to app.js
 # Place call; InfoWindows
+# clear markers before new added
