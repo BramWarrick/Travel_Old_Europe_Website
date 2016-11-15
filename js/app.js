@@ -203,6 +203,7 @@ var map;
 var infoWindow;
 var service;
 var markers = [];
+var minRating = 4;
 
 var wikiData;
 var title;
@@ -228,10 +229,23 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow();
   service = new google.maps.places.PlacesService(map);
 
-  google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+  google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
     performKeywordSearch('Tourist Destination');
   });
 
+}
+
+function performKeywordSearch(keyword) {
+  deleteMarkers();
+
+  var request = {
+    bounds: map.getBounds(),
+    language: 'en',
+    rankBy: google.maps.places.RankBy.PROMINENCE,
+    keyword: [keyword]
+  };
+  // console.log(request)
+  service.nearbySearch(request, callback);
 }
 
 function performTypeSearch(type) {
@@ -242,20 +256,6 @@ function performTypeSearch(type) {
     language: 'en',
     rankBy: google.maps.places.RankBy.PROMINENCE,
     types: [type]
-  };
-  // console.log(request)
-  service.nearbySearch(request, callback);
-}
-
-
-function performKeywordSearch(keyword) {
-  deleteMarkers();
-
-  var request = {
-    bounds: map.getBounds(),
-    language: 'en',
-    rankBy: google.maps.places.RankBy.PROMINENCE,
-    keyword: [keyword]
   };
   // console.log(request)
   service.nearbySearch(request, callback);
@@ -278,37 +278,139 @@ function callback(results, status) {
     console.error(status);
     return;
   }
-  // console.log(results);
+  // Success - Write markers to map
   for (var i = 0, result; result = results[i]; i++) {
-    if (result.rating > 4) {
+    // Only write markers with a rating higher than minRating
+    // Also filters those with no rating
+    if (result.rating > minRating) {
       addMarker(result);
     }
   }
 }
 
+
+function addMarker(place) {
+  marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+
+  google.maps.event.addListener(marker, 'click', (function(marker, place, infoWindow) {
+    return function() {
+      service.getDetails(place, function(result, status) {
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+          console.error(status);
+          return;
+        }
+
+        // Wikipedia data is added to infoWindow by addWikiInfo - once data is returned
+        addWikiInfo(result.name); // asynchronous
+        addGMapsInfo(result, place);
+        openInfoWindow(marker);
+
+      });
+    };
+  })(marker, place, infoWindow));
+
+  markers.push(marker);
+}
+
+function addWikiInfo(site) {
+
+  remoteUrlWithOrigin = "https://en.wikipedia.org/w/api.php?&action=query&prop=info|extracts&inprop=url&exsentences=6&explaintext=&titles=" + site + "&format=json&redirects=1&callback=wikiCallback";
+
+  $.ajax({
+    url: remoteUrlWithOrigin,
+    dataType: 'jsonp',
+    success: function(data) {
+      var pages = data.query.pages;
+      var wikiUrl;
+      console.log(data);
+      // Always only one page returned, but id is unknown; loop
+      for (var page in pages) {
+        wikiUrl = pages[page].fullUrl;
+        snippet = pages[page].extract;
+        console.log(pages[page]);
+      }
+      var wikiText = 'Wiki';
+
+      refreshInfoWindowVM();
+      ko.cleanNode(infoWindow.content);
+      ko.applyBindings(infoWindowViewModel, infoWindow.content);
+    }
+  });
+}
+
+function addGMapsInfo(result, place) {
+  title = result.name
+
+  // Get image URL, if image data present
+  if (typeof place.photos[0] != 'undefined') {
+    imgUrl = place.photos[0].getUrl({
+      'maxWidth': 50,
+      'maxHeight': 50
+    });
+  }
+
+  // Location's rating, if present
+  if (typeof result.rating != 'undefined') {
+    rating = 'Rating:   ' + result.rating;
+  }
+
+  // Location's website, if present
+  if (typeof result.website != 'undefined') {
+    websiteText = 'Website';
+    websiteUrl = '"' + result.website + '"';
+  }
+  refreshInfoWindowVM();
+}
+
+function refreshInfoWindowVM() {
+  infoWindowViewModel = {
+    title: title,
+    imgUrl: imgUrl,
+    rating: rating,
+    websiteText: websiteText,
+    websiteUrl: websiteUrl,
+    snippet: snippet,
+    wikiText: wikiText,
+    wikiUrl: wikiUrl
+  }
+}
+
+function openInfoWindow(marker) {
+  infoWindow.setContent(createContent());
+  ko.cleanNode(infoWindow.content);
+  ko.applyBindings(infoWindowViewModel, infoWindow.content);
+  infoWindow.open(map, marker);
+}
+
 // Adapted from code found at:
 // http://stackoverflow.com/questions/31970927/binding-knockoutjs-to-google-maps-infowindow-content
-// Implementation in addMarker differs from example on page
+// Implementation in addMarker differs more significantly from example on page
 function createContent() {
   var html;
-  html = '<div id="infoWindow" class="info-window">' +
-            '<div class = "row">'+ 
+  // Formatted as HTML for readability
+
+  // html =$.get('/js/templates/infoWindow.html');
+  html =  '<div id="infoWindow" class="info-window">' +
+            '<div class = "row">' +
               '<h3 class="col-md-12" data-bind="text: title">' +
-              '</h3>' + 
+              '</h3>' +
             '</div>' +
             '<div class="info-content"><p>' +
-              '<div class = "row">'+ 
+              '<div class = "row">' +
                 '<div class="col-md-3">' +
                   // '<img style="float:left" data-bind="attr:{src: imageUrl}" />' +
-                '</div>' + 
+                '</div>' +
                 '<div class="col-md-9">' +
                   '<div class = "row">' +
                     '<div class="col-md-12" data-bind="text: rating">' +
-                    '</div>' + 
-                  '</div>' + 
+                    '</div>' +
+                  '</div>' +
                   '<div class = "row">' +
                     '<a href="#" class="col-md-12" data-bind="text: websiteText, click: websiteUrl"></a>' +
-                  '</div>' + 
+                  '</div>' +
                 '</div>' +
               '</div>' +
               '<div class = "row">' +
@@ -323,111 +425,6 @@ function createContent() {
           '</div>';
   html = $.parseHTML(html)[0];
   return html;
-}
-
-
-function addMarker(place) {
-  marker = new google.maps.Marker({
-    map: map,
-    // animation: google.maps.Animation.DROP,
-    position: place.geometry.location
-    // icon: place.photos[0].getUrl({'maxWidth': 35, 'maxHeight': 35})
-    //icon: markerImage
-  });
-
-  google.maps.event.addListener(marker, 'click', (function(marker, place, infoWindow) {
-    return function() {
-      service.getDetails(place, function(result, status) {
-        if (status !== google.maps.places.PlacesServiceStatus.OK) {
-          console.error(status);
-          return;
-        }
-
-        var wikiData = getWikiInfo(result.name)
-
-        // console.log(result);
-
-        
-        title = result.name
-        // Get image URL, if image data present
-        if (typeof place.photos[0] != 'undefined') {
-          imgUrl =  place.photos[0].getUrl({
-                      'maxWidth': 50,
-                      'maxHeight': 50
-                    });
-        }
-        // Location rating, if present
-        if (typeof result.rating != 'undefined') {
-          rating = 'Rating:   ' + result.rating;
-        }
-        // Location website, if present
-        if (typeof result.website != 'undefined') {
-          websiteText = 'Website';
-          websiteUrl = '"' + result.website + '"';
-        }
-        console.log(typeof wikiData)
-        if (typeof wikiData != "undefined") {
-          console.log(wikiData.query)
-           // First paragraph(s), from wikipedia
-          if (typeof wikiData.query.pages[0].extract != 'undefined') {
-            snippet = wikiData.query.pages[0].extract;
-          }
-          // Wikipedia page, if present
-          if (typeof wikiData.query.pages[0].fullurl != 'undefined') {
-            wikiText = 'Wiki'
-            wikiUrl = wikiData.query.pages[0].fullurl;
-          }
-        }
-
-
-      infoWindowViewModel = {
-          title: title,
-          imgUrl: imgUrl,
-          rating: rating,
-          websiteText: websiteText,
-          websiteUrl: websiteUrl,
-          snippet: snippet,
-          wikiText: wikiText,
-          wikiUrl: wikiUrl
-          }
-
-        infoWindow.setContent(createContent());
-        ko.applyBindings(infoWindowViewModel, infoWindow.content);
-        infoWindow.open(map, marker);
-
-      });
-    };
-  })(marker, place, infoWindow));
-
-  markers.push(marker);
-}
-
-// addInfoWindow modified from code found at:
-// http://stackoverflow.com/questions/5868903/marker-content-infowindow-google-maps
-function newInfoWindow(marker, place) {
-  service.getDetails(place, function(result, status) {
-    if (status !== google.maps.places.PlacesServiceStatus.OK) {
-      console.error(status);
-      return;
-    }
-
-    // console.log(result);
-
-    var body = getWikiInfo(result.name)
-
-    var contentString = '<div class="info-window">' +
-      '<h3>' + result.name + '</h3>' +
-      '<div class="info-content">' +
-      '<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>' +
-      '</div>' +
-      '</div>';
-
-    var infoWindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-
-    infoWindow.open(map, marker);
-  });
 }
 
 categoryViewModel = {
@@ -470,10 +467,22 @@ categoryViewModel = {
   }]
 }
 
+infoWindowViewModel = {
+  title: title,
+  imgUrl: imgUrl,
+  rating: rating,
+  websiteText: websiteText,
+  websiteUrl: websiteUrl,
+  snippet: snippet,
+  wikiText: wikiText,
+  wikiUrl: wikiUrl
+}
+
 ko.applyBindings({
   categoryViewModel
 });
 
+// Code for sidebar navigation - expand and collapse
 var nav = false;
 
 function openNav() {
@@ -490,46 +499,3 @@ function toggleNav() {
   nav ? closeNav() : openNav();
 }
 
-function getWikiInfo(site) {
-
-  // var wikiRequestTimeout = setTimeout(function(){
-  //     $wikiElem.text("Failed to get Wikipedia resources");
-  // }, 8000);
-
-  // Using jQuery
-
-  remoteUrlWithOrigin = "https://en.wikipedia.org/w/api.php?&action=query&prop=info|extracts&inprop=url&exintro=&explaintext=&titles=" + site + "&format=json&redirects=1&callback=wikiCallback";
-
-  $.ajax({
-    url: remoteUrlWithOrigin,
-    dataType: 'jsonp',
-    success: function(data) {
-      console.log(data);
-      console.log(data.query.pages);
-      var pages = data.query.pages;
-      var wikiUrl;
-      for (var page in pages) {
-        wikiUrl = pages[page].fullUrl;
-        snippet = pages[page].extract;
-      }
-      var wikiText = 'Wiki';
-      
-      infoWindowViewModel = {
-        title: title,
-        imgUrl: imgUrl,
-        rating: rating,
-        websiteText: websiteText,
-        websiteUrl: websiteUrl,
-        snippet: snippet,
-        wikiText: wikiText,
-        wikiUrl: wikiUrl
-        };
-
-      ko.cleanNode(infoWindow.content);
-      ko.applyBindings(infoWindowViewModel, infoWindow.content);
-      return data.query;
-
-      // clearTimeout(wikiRequestTimeout);
-    }
-  });
-}

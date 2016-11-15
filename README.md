@@ -11,3 +11,4 @@
 # Added keyword search - significant improvement in results returned
 # Added image to infowindow
 # semi-clean point before housekeeping
+# housekeeping; shortened wikipedia paragraphs
