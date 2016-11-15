@@ -204,6 +204,16 @@ var infoWindow;
 var service;
 var markers = [];
 
+var wikiData;
+var title;
+var imgUrl;
+var rating;
+var websiteText;
+var websiteUrl;
+var snippet;
+var wikiText;
+var wikiUrl;
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
@@ -233,7 +243,7 @@ function performTypeSearch(type) {
     rankBy: google.maps.places.RankBy.PROMINENCE,
     types: [type]
   };
-  console.log(request)
+  // console.log(request)
   service.nearbySearch(request, callback);
 }
 
@@ -247,14 +257,14 @@ function performKeywordSearch(keyword) {
     rankBy: google.maps.places.RankBy.PROMINENCE,
     keyword: [keyword]
   };
-  console.log(request)
+  // console.log(request)
   service.nearbySearch(request, callback);
 }
 
 // deleteMarkers is an adaptation of code found:
 // https: developers.google.com/maps/documentation/javascript/examples/marker-remove
 
-// Deletes all markers in the array by removing references to them.
+// Deletes all markers in the array
 function deleteMarkers() {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
@@ -268,7 +278,7 @@ function callback(results, status) {
     console.error(status);
     return;
   }
-  console.log(results);
+  // console.log(results);
   for (var i = 0, result; result = results[i]; i++) {
     if (result.rating > 4) {
       addMarker(result);
@@ -276,13 +286,51 @@ function callback(results, status) {
   }
 }
 
+// Adapted from code found at:
+// http://stackoverflow.com/questions/31970927/binding-knockoutjs-to-google-maps-infowindow-content
+// Implementation in addMarker differs from example on page
+function createContent() {
+  var html;
+  html = '<div id="infoWindow" class="info-window">' +
+            '<div class = "row">'+ 
+              '<h3 class="col-md-12" data-bind="text: title">' +
+              '</h3>' + 
+            '</div>' +
+            '<div class="info-content"><p>' +
+              '<div class = "row">'+ 
+                '<div class="col-md-3">' +
+                  // '<img style="float:left" data-bind="attr:{src: imageUrl}" />' +
+                '</div>' + 
+                '<div class="col-md-9">' +
+                  '<div class = "row">' +
+                    '<div class="col-md-12" data-bind="text: rating">' +
+                    '</div>' + 
+                  '</div>' + 
+                  '<div class = "row">' +
+                    '<a href="#" class="col-md-12" data-bind="text: websiteText, click: websiteUrl"></a>' +
+                  '</div>' + 
+                '</div>' +
+              '</div>' +
+              '<div class = "row">' +
+                '<div class="col-md-12" data-bind="text: snippet">' +
+                '</div>' +
+              '</div>' +
+              '<div class = "row">' +
+                '<a href="#" class="col-md-12" data-bind="text: wikiText, click: wikiUrl"></a>' +
+                '</div>' +
+              '</div>' +
+            '</p></div>' +
+          '</div>';
+  html = $.parseHTML(html)[0];
+  return html;
+}
 
 
 function addMarker(place) {
   marker = new google.maps.Marker({
     map: map,
     // animation: google.maps.Animation.DROP,
-    position: place.geometry.location,
+    position: place.geometry.location
     // icon: place.photos[0].getUrl({'maxWidth': 35, 'maxHeight': 35})
     //icon: markerImage
   });
@@ -295,20 +343,58 @@ function addMarker(place) {
           return;
         }
 
-        console.log(result);
+        var wikiData = getWikiInfo(result.name)
 
-        var contentString = '<div class="info-window">' +
-          '<h3>' + result.name + '</h3>' +
-          '<div class="info-content">' +
-          '<img style="float:left" src="' + place.photos[0].getUrl({'maxWidth': 50, 'maxHeight': 50}) + '">' +
-          '<p>Rating:   ' + result.rating + '</br>' +
-          '<a href="' + result.website + '" target="_blank">' + result.website + '</a></br>' +
-          '<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>' +
-          '</div>' +
-          '</div>';
+        // console.log(result);
 
-        infoWindow.setContent(contentString);
+        
+        title = result.name
+        // Get image URL, if image data present
+        if (typeof place.photos[0] != 'undefined') {
+          imgUrl =  place.photos[0].getUrl({
+                      'maxWidth': 50,
+                      'maxHeight': 50
+                    });
+        }
+        // Location rating, if present
+        if (typeof result.rating != 'undefined') {
+          rating = 'Rating:   ' + result.rating;
+        }
+        // Location website, if present
+        if (typeof result.website != 'undefined') {
+          websiteText = 'Website';
+          websiteUrl = '"' + result.website + '"';
+        }
+        console.log(typeof wikiData)
+        if (typeof wikiData != "undefined") {
+          console.log(wikiData.query)
+           // First paragraph(s), from wikipedia
+          if (typeof wikiData.query.pages[0].extract != 'undefined') {
+            snippet = wikiData.query.pages[0].extract;
+          }
+          // Wikipedia page, if present
+          if (typeof wikiData.query.pages[0].fullurl != 'undefined') {
+            wikiText = 'Wiki'
+            wikiUrl = wikiData.query.pages[0].fullurl;
+          }
+        }
+
+
+      infoWindowViewModel = {
+          title: title,
+          imgUrl: imgUrl,
+          rating: rating,
+          websiteText: websiteText,
+          websiteUrl: websiteUrl,
+          snippet: snippet,
+          wikiText: wikiText,
+          wikiUrl: wikiUrl
+          }
+
+        infoWindow.setContent(createContent());
+        ko.applyBindings(infoWindowViewModel, infoWindow.content);
         infoWindow.open(map, marker);
+
       });
     };
   })(marker, place, infoWindow));
@@ -325,7 +411,9 @@ function newInfoWindow(marker, place) {
       return;
     }
 
-    console.log(result);
+    // console.log(result);
+
+    var body = getWikiInfo(result.name)
 
     var contentString = '<div class="info-window">' +
       '<h3>' + result.name + '</h3>' +
@@ -402,30 +490,46 @@ function toggleNav() {
   nav ? closeNav() : openNav();
 }
 
-// function getWikiInfo(site) {
+function getWikiInfo(site) {
 
-//   // var wikiRequestTimeout = setTimeout(function(){
-//   //     $wikiElem.text("Failed to get Wikipedia resources");
-//   // }, 8000);
+  // var wikiRequestTimeout = setTimeout(function(){
+  //     $wikiElem.text("Failed to get Wikipedia resources");
+  // }, 8000);
 
-//   // Using jQuery
+  // Using jQuery
 
-//   remoteUrlWithOrigin ="https://en.wikipedia.org/w/api.php?&action=query&prop=extracts&exintro=&explaintext=&titles=" + site
-//     + "&format=json&redirects=1&callback=wikiCallback";
+  remoteUrlWithOrigin = "https://en.wikipedia.org/w/api.php?&action=query&prop=info|extracts&inprop=url&exintro=&explaintext=&titles=" + site + "&format=json&redirects=1&callback=wikiCallback";
 
-//   $.ajax( {
-//       url: remoteUrlWithOrigin,
-//       dataType: 'jsonp',
-//       success: function(data) {
-//       var result = data[1];
+  $.ajax({
+    url: remoteUrlWithOrigin,
+    dataType: 'jsonp',
+    success: function(data) {
+      console.log(data);
+      console.log(data.query.pages);
+      var pages = data.query.pages;
+      var wikiUrl;
+      for (var page in pages) {
+        wikiUrl = pages[page].fullUrl;
+        snippet = pages[page].extract;
+      }
+      var wikiText = 'Wiki';
+      
+      infoWindowViewModel = {
+        title: title,
+        imgUrl: imgUrl,
+        rating: rating,
+        websiteText: websiteText,
+        websiteUrl: websiteUrl,
+        snippet: snippet,
+        wikiText: wikiText,
+        wikiUrl: wikiUrl
+        };
 
-//       for (var i = 0; i < articleList.length; i++) {
-//         articleStr = articleList[i];
-//         var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-//         $wikiElem.append('<li><a href="' + url + '">' + articleStr + '<a/></li>');
-//       };
+      ko.cleanNode(infoWindow.content);
+      ko.applyBindings(infoWindowViewModel, infoWindow.content);
+      return data.query;
 
-//       // clearTimeout(wikiRequestTimeout);
-//       }
-//   });
-// ]
+      // clearTimeout(wikiRequestTimeout);
+    }
+  });
+}

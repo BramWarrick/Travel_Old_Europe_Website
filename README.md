@@ -10,3 +10,4 @@
 # clear markers before new added
 # Added keyword search - significant improvement in results returned
 # Added image to infowindow
+# semi-clean point before housekeeping

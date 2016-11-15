@@ -11,14 +11,8 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- <script type="text/javascript" src="http://www.panoramio.com/wapi/wapi.js?v=1&amp;hl=fr"></script> -->
   </head>
-  <!-- To Do:
-  closeNav is not working due to incompatibility with bootstrap 
-    - only occured once moved google api link above app.js
-      - This fixed "google not found" error
 
-  -->
-
-  <body>
+  <body class = "container-fluid">
 
     <span id="site-title" style="font-size:30px;cursor:pointer" onclick="toggleNav()">&#9776; Travelling Rome</span>
 
@@ -29,10 +23,10 @@
           Categories
         </div>
       </div>
-      <div data-bind="foreach: category">
+      <div data-bind="foreach: categoryViewModel.categories">
         <div class='row'>
           <div class='col-md-12'>
-            <a href="#" data-bind="text: categoryName"></a>
+            <a href="#" data-bind="text: categoryName, click: link"></a>
           </div>
         </div>
       </div>
@@ -41,15 +35,9 @@
 
     <div id="map"></div>
 
-    <!--
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5rdxfX_sDJf5PZfMAIYGb67EHYn50UJw&callback=initMap">
-    </script>
-    -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="js/lib/knockout-3.4.0.js"></script>
-    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5rdxfX_sDJf5PZfMAIYGb67EHYn50UJw&libraries=places"></script>-->
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5rdxfX_sDJf5PZfMAIYGb67EHYn50UJw&libraries=places&callback=initMap">
     </script>
