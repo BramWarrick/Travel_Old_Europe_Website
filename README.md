@@ -9,3 +9,4 @@
 # Place call; InfoWindows
 # clear markers before new added
 # Added keyword search - significant improvement in results returned
+# Added image to infowindow

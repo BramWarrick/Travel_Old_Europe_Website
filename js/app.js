@@ -218,11 +218,10 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow();
   service = new google.maps.places.PlacesService(map);
 
-  performKeywordSearch('Tourist Destination');
+  google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+    performKeywordSearch('Tourist Destination');
+  });
 
-  // The idle event is a debounced event, so we can query & listen without
-  // throwing too many requests at the server.
-  // map.addListener('idle', performTypeSearch);
 }
 
 function performTypeSearch(type) {
@@ -284,6 +283,7 @@ function addMarker(place) {
     map: map,
     // animation: google.maps.Animation.DROP,
     position: place.geometry.location,
+    // icon: place.photos[0].getUrl({'maxWidth': 35, 'maxHeight': 35})
     //icon: markerImage
   });
 
@@ -300,8 +300,9 @@ function addMarker(place) {
         var contentString = '<div class="info-window">' +
           '<h3>' + result.name + '</h3>' +
           '<div class="info-content">' +
+          '<img style="float:left" src="' + place.photos[0].getUrl({'maxWidth': 50, 'maxHeight': 50}) + '">' +
           '<p>Rating:   ' + result.rating + '</br>' +
-          'Website:   <a href="' + result.website + '" target="_blank">' + result.website + '</a></br>' +
+          '<a href="' + result.website + '" target="_blank">' + result.website + '</a></br>' +
           '<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>' +
           '</div>' +
           '</div>';
