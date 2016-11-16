@@ -199,14 +199,19 @@ var mapStyleValues = [{
   }]
 }];
 
+var placeConcise;
 var map;
 var infoWindow;
 var service;
 var markers = [];
 var minRating = 4;
+var starredPlaces = [];
 
 var wikiData;
 var title;
+var starImg;
+var starTitle;
+var imgHTML;
 var imgUrl;
 var rating;
 var websiteText;
@@ -229,6 +234,13 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow();
   service = new google.maps.places.PlacesService(map);
 
+    // Get saved locations array, if exists
+  localSave = localStorage.getItem('persistStarredPlaces')
+  
+  if (localSave != 'undefined' && localSave != null) {
+    starredPlaces = JSON.parse(localSave);
+  }
+
   google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
     performKeywordSearch('Tourist Destination');
   });
@@ -244,7 +256,7 @@ function performKeywordSearch(keyword) {
     rankBy: google.maps.places.RankBy.PROMINENCE,
     keyword: [keyword]
   };
-  // console.log(request)
+
   service.nearbySearch(request, callback);
 }
 
@@ -257,7 +269,7 @@ function performTypeSearch(type) {
     rankBy: google.maps.places.RankBy.PROMINENCE,
     types: [type]
   };
-  // console.log(request)
+
   service.nearbySearch(request, callback);
 }
 
@@ -271,7 +283,6 @@ function deleteMarkers() {
   }
   markers = [];
 }
-
 
 function callback(results, status) {
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -288,10 +299,24 @@ function callback(results, status) {
   }
 }
 
-
 function addMarker(place) {
+
+  // Handle the possibility that a starred location is sent through; cannot auto-false
+  var starred;
+  if (getStarredStatus(place.id) === true) {
+    starred = true;
+  } else {
+    starred = false;
+  }
+
+  // Create placeConcise in case it's needed for starred locations
+  placeConcise = {id: place.id,
+    starred: starred,
+    geometry: place.geometry};
+
   marker = new google.maps.Marker({
     map: map,
+    placeConcise: placeConcise,       // used for starred locations
     position: place.geometry.location
   });
 
@@ -303,8 +328,11 @@ function addMarker(place) {
           return;
         }
 
-        // Wikipedia data is added to infoWindow by addWikiInfo - once data is returned
+        placeConcise = marker.placeConcise;
+
+        // Wikipedia data is added to infoWindow once data is returned
         addWikiInfo(result.name); // asynchronous
+        setStarImgVals(placeConcise.starred)
         addGMapsInfo(result, place);
         openInfoWindow(marker);
 
@@ -317,22 +345,24 @@ function addMarker(place) {
 
 function addWikiInfo(site) {
 
-  remoteUrlWithOrigin = "https://en.wikipedia.org/w/api.php?&action=query&prop=info|extracts&inprop=url&exsentences=6&explaintext=&titles=" + site + "&format=json&redirects=1&callback=wikiCallback";
+  remoteUrlWithOrigin = "https://en.wikipedia.org/w/api.php?&action=query&prop=info|extracts&inprop=url&exsentences=4&explaintext=&titles=" + site + "&format=json&redirects=1&callback=wikiCallback";
+  wikiUrl = "";
+  snippet = "";
+  wikiText = "";
 
   $.ajax({
     url: remoteUrlWithOrigin,
     dataType: 'jsonp',
     success: function(data) {
       var pages = data.query.pages;
-      var wikiUrl;
-      console.log(data);
+ 
       // Always only one page returned, but id is unknown; loop
       for (var page in pages) {
-        wikiUrl = pages[page].fullUrl;
+        wikiUrl = pages[page].fullurl;
+        wikiUrl = wikiUrl.replace(/['"]+/g, '')
         snippet = pages[page].extract;
-        console.log(pages[page]);
       }
-      var wikiText = 'Wiki';
+      wikiText = 'Wiki';
 
       refreshInfoWindowVM();
       ko.cleanNode(infoWindow.content);
@@ -342,14 +372,21 @@ function addWikiInfo(site) {
 }
 
 function addGMapsInfo(result, place) {
+  // result doesn't bring back img data, must include place
+
   title = result.name
+
+  imgHTML = ""
 
   // Get image URL, if image data present
   if (typeof place.photos[0] != 'undefined') {
     imgUrl = place.photos[0].getUrl({
-      'maxWidth': 50,
-      'maxHeight': 50
+      'maxWidth': 75,
+      'maxHeight': 75
     });
+    imgHTML = '<div class="col-md-2">' +
+                '<img style="float:left" data-bind="attr:{src: imgUrl, alt: title}" />' +
+              '</div>';
   }
 
   // Location's rating, if present
@@ -360,14 +397,33 @@ function addGMapsInfo(result, place) {
   // Location's website, if present
   if (typeof result.website != 'undefined') {
     websiteText = 'Website';
-    websiteUrl = '"' + result.website + '"';
+    websiteUrl = result.website;
   }
   refreshInfoWindowVM();
+}
+
+function setStarImgVals(starred) {
+    if (starred === true) {
+    starImg = "img/star_saved.png";
+    starTitle = "Saved";
+  } else {
+    starImg = "img/star_saved_not.png";
+    starTitle = "Not Saved";
+  }
+
+  // If infoWindow.content exists, update with new information
+  if (typeof infoWindow.content != 'undefined') {
+    refreshInfoWindowVM();
+    ko.cleanNode(infoWindow.content);
+    ko.applyBindings(infoWindowViewModel, infoWindow.content);
+  }
 }
 
 function refreshInfoWindowVM() {
   infoWindowViewModel = {
     title: title,
+    starImg: starImg,
+    starTitle: starTitle,
     imgUrl: imgUrl,
     rating: rating,
     websiteText: websiteText,
@@ -376,6 +432,7 @@ function refreshInfoWindowVM() {
     wikiText: wikiText,
     wikiUrl: wikiUrl
   }
+  // console.log(placeConcise);
 }
 
 function openInfoWindow(marker) {
@@ -385,31 +442,72 @@ function openInfoWindow(marker) {
   infoWindow.open(map, marker);
 }
 
+function addStarredPlace(place) {
+  // Avoid accidental duplicates if bugs exist or are introduced
+  if (getStarredStatus(place.id) === false) {
+    starredPlaces.push(place);
+    place.starred = true;
+    setStarImgVals(place.starred)
+    // Save starredPlaces array to localstorage
+    localStorage.setItem('persistStarredPlaces', JSON.stringify(starredPlaces));
+  }
+  console.log(starredPlaces);
+}
+
+function getStarredStatus(pid) {
+  for (var site in starredPlaces) {
+    if (starredPlaces[site].id === pid) {
+      return true;
+    }
+  }
+  // If empty
+  return false;
+}
+
+function removeStarredPlace(place) {
+  for (var site in starredPlaces) {
+    // console.log('site.id:' + starredPlaces[site].id)
+    if (starredPlaces[site].id === place.id) {
+      starredPlaces.splice(site, 1);
+      place.starred = false;
+      // Save starredPlaces array to localstorage
+      localStorage.setItem('persistStarredPlaces', JSON.stringify(starredPlaces));
+      setStarImgVals(place)
+    }
+  }
+  console.log(starredPlaces)
+}
+
+function toggleStarredPlace(place) {
+  place.starred ? removeStarredPlace(place) : addStarredPlace(place);
+}
+
 // Adapted from code found at:
 // http://stackoverflow.com/questions/31970927/binding-knockoutjs-to-google-maps-infowindow-content
 // Implementation in addMarker differs more significantly from example on page
 function createContent() {
   var html;
   // Formatted as HTML for readability
-
-  // html =$.get('/js/templates/infoWindow.html');
   html =  '<div id="infoWindow" class="info-window">' +
             '<div class = "row">' +
-              '<h3 class="col-md-12" data-bind="text: title">' +
+              '<h3 class="col-md-11" data-bind="text: title">' +
               '</h3>' +
+                '<img class="col-md-1 float:right" data-bind="attr:{src: starImg, alt: starTitle}' +
+                  ', click: function() {' +
+                    'toggleStarredPlace(placeConcise);' +
+                  "}" + 
+                  '"/>' +
             '</div>' +
             '<div class="info-content"><p>' +
               '<div class = "row">' +
-                '<div class="col-md-3">' +
-                  // '<img style="float:left" data-bind="attr:{src: imageUrl}" />' +
-                '</div>' +
+                imgHTML +
                 '<div class="col-md-9">' +
                   '<div class = "row">' +
                     '<div class="col-md-12" data-bind="text: rating">' +
                     '</div>' +
                   '</div>' +
                   '<div class = "row">' +
-                    '<a href="#" class="col-md-12" data-bind="text: websiteText, click: websiteUrl"></a>' +
+                    '<a class = "col-md-12" target="_blank" data-bind="text: websiteText, attr: {href: websiteUrl}"></a>'+
                   '</div>' +
                 '</div>' +
               '</div>' +
@@ -418,7 +516,7 @@ function createContent() {
                 '</div>' +
               '</div>' +
               '<div class = "row">' +
-                '<a href="#" class="col-md-12" data-bind="text: wikiText, click: wikiUrl"></a>' +
+                '<a class = "col-md-12" target="_blank" data-bind="text: wikiText, attr: {href: wikiUrl}"></a>'+
                 '</div>' +
               '</div>' +
             '</p></div>' +
