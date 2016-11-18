@@ -19,7 +19,16 @@ padding: 0;
 body {
   font-family: "Lato", sans-serif;
   background-color: #b5b292;
-  color : #d5d3bf;
+  color: #d5d3bf;
+}
+
+.gm-style-iw div { 
+ overflow-x:hidden !important; 
+}
+
+.info-window {
+  text-shadow:0px 0px 8px #b5b292;
+  color: #000000;
 }
 
 .sidenav {

@@ -12,3 +12,5 @@
 # Added image to infowindow
 # semi-clean point before housekeeping
 # housekeeping; shortened wikipedia paragraphs
+# Added localStorage and ability to save personal favorites
+# refactoring, img appears with local save, also
