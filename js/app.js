@@ -1,3 +1,67 @@
+var categoryViewModel = {
+  categories: [{
+    id: 1,
+    categoryName: 'Recommended',
+    link: function() {
+      addMarkersFromList(authorFavorites);
+    }
+  }, {
+    id: 2,
+    categoryName: 'Destinations',
+    link: function() {
+      performKeywordSearch('Tourist Destination');
+    }
+  }, {
+    id: 3,
+    categoryName: 'Churches',
+    link: function() {
+      performKeywordSearch('Catholic Church');
+    }
+  }, {
+    id: 4,
+    categoryName: 'Lodging',
+    link: function() {
+      performTypeSearch('lodging');
+    }
+  }, {
+    id: 5,
+    categoryName: 'Museums',
+    link: function() {
+      performTypeSearch('museum');
+    }
+  }, {
+    id: 6,
+    categoryName: 'Restaurants',
+    link: function() {
+      performTypeSearch('restaurant');
+    }
+  }, {
+    id: 7,
+    categoryName: 'Shopping',
+    link: function() {
+      performTypeSearch('store');
+    }
+  }, {
+    id: 8,
+    categoryName: 'Saved',
+    link: function() {
+      addMarkersFromList(savedPlaces);
+    }
+  }]
+};
+
+var infoWindowViewModel = {
+  title: ko.observable(""),
+  saveClass: ko.observable(""),
+  placeImgURL: ko.observable(""),
+  rating: ko.observable(""),
+  websiteText: ko.observable(""),
+  websiteURL: ko.observable(""),
+  snippet: ko.observable(""),
+  wikiText: ko.observable(""),
+  wikiURL: ko.observable("")
+};
+
 var mapStyleValues = [{
   elementType: 'geometry',
   stylers: [{
@@ -316,17 +380,10 @@ var markers = [];
 var minRating = 4;
 var savedPlaces = [];
 
-var title;
-var saveClass;
-var placeImgHTML;
-var placeImgURL;
-var rating;
-var websiteText;
-var websiteURL;
-var snippet;
-var wikiText;
-var wikiURL;
-
+/**
+* @description Initializes map
+* @description Runs once html page is loaded
+*/
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
@@ -353,11 +410,21 @@ function initMap() {
 
 }
 
+/**
+* @description Runs user directed search, allowing search terms
+* @description Value is pulled from input box on index.html
+*/
 function userSearch() {
     var searchTerm = document.getElementById("searchText").value;
     performKeywordSearch(searchTerm);
 }
 
+/**
+* @description Requests location data based on search terms
+* @description Can be multiple words
+* @description Results limited to bounds of map
+* @param {string} keyword - requests and loads markers based on keyword search
+*/
 function performKeywordSearch(keyword) {
   deleteMarkers();
 
@@ -371,6 +438,12 @@ function performKeywordSearch(keyword) {
   service.nearbySearch(request, callback);
 }
 
+/**
+* @description Requests location data based on place type
+* @description https://developers.google.com/places/supported_types
+* @description Results limited to bounds of map
+* @param {string} type - requests and loads markers based on place type
+*/
 function performTypeSearch(type) {
   deleteMarkers();
 
@@ -384,17 +457,24 @@ function performTypeSearch(type) {
   service.nearbySearch(request, callback);
 }
 
+/**
+* @description Requests location data based on place type
+* @description https://developers.google.com/places/supported_types
+* @description Results NOT limited to bounds of map
+* @param {list} list - list with place information (placeId, lat/lng)
+*/
 function addMarkersFromList(list) {
   deleteMarkers();
-
   for (entry in list) {
     addMarker(list[entry]);
   }
 }
 
-// deleteMarkers is an adaptation of code found:
-// https: developers.google.com/maps/documentation/javascript/examples/marker-remove
-// Deletes all markers in the array
+/**
+* @description Removes markers as part of UI refresh
+* @description adaptation of code found:
+* @description https: developers.google.com/maps/documentation/javascript/examples/marker-remove
+*/
 function deleteMarkers() {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
@@ -402,6 +482,12 @@ function deleteMarkers() {
   markers = [];
 }
 
+/**
+* @description Uses google maps service reply to load markers on screen
+* @description Filters based on rating, must be above minRating; ensures quality
+* @param {list} results - list of places data (e.g placeId, photos, lat/lng)
+* @param {string} status - success/failure message from google api
+*/
 function callback(results, status) {
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
     console.error(status);
@@ -417,6 +503,11 @@ function callback(results, status) {
   }
 }
 
+/**
+* @description Creates a single marker, based on place data
+* @description Listener is created for InfoWindow
+* @param {json string} place - list of place data (e.g placeId, photos, lat/lng)
+*/
 function addMarker(place) {
   var marker = new google.maps.Marker({
     map: map,
@@ -425,7 +516,13 @@ function addMarker(place) {
     position: place.geometry.location
   });
 
-  // Listener function for marker click
+  /**
+  * @description LISTENER: Loads InfoWindow data asynchronously
+  * @description infoWindow is global in scope and reused
+  * @description based on marker clicks - ensuring one infoWindow at a time
+  * @param {object} marker - marker object with data and functions
+  * @param {json string} place - place object with data and functions
+  */
   google.maps.event.addListener(marker, 'click', (function(marker, place) {
 
     return function() {
@@ -448,34 +545,44 @@ function addMarker(place) {
   markers.push(marker);
 }
 
+/**
+* @description Request data from Wikipedia
+* @description Successful response causes updates to observable variables
+* @description based on marker clicks - ensuring one infoWindow at a time
+* @param {string} site - location name
+*/
 function addWikiInfo(site) {
   var remoteUrl = "https://en.wikipedia.org/w/api.php?&action=query&prop=info|extracts&inprop=url&exsentences=4&explaintext=&titles=" + site + "&format=json&redirects=1&callback=wikiCallback";
-  wikiURL = "";
-  snippet = "";
-  wikiText = "";
-  refreshInfoWindowVM();
+  infoWindowViewModel.wikiURL("");
+  infoWindowViewModel.snippet("");
+  infoWindowViewModel.wikiText("");
 
   $.ajax({
     url: remoteUrl,
     dataType: 'jsonp',
     success: function(data) {
       var pages = data.query.pages;
- 
+
       // Always maximum of one page returned, but id is unknown; loop
       for (var page in pages) {
         wikiURL = pages[page].fullurl;
         wikiURL = wikiURL.replace(/['"]+/g, '');
         snippet = pages[page].extract;
       }
-      wikiText = 'Wiki';
-
-      refreshInfoWindowVM();
-      ko.cleanNode(infoWindow.content);
-      ko.applyBindings(infoWindowViewModel, infoWindow.content);
+      infoWindowViewModel.wikiURL(wikiURL);
+      infoWindowViewModel.snippet(snippet);
+      infoWindowViewModel.wikiText('Wiki');
     }
   });
 }
 
+/**
+* @description Checks for photos within place
+* @description If none found, triggers place refresh
+* @description Required because local lists do not store photo functions
+* @description Saved only the most immutable data locally
+* @param {json string} place - place object with data and functions
+*/
 function addPlaceImg(place) {
   if (typeof place.photos != 'undefined') {
     addGMapsImg(place);        // Get image URL, if image data present
@@ -484,14 +591,26 @@ function addPlaceImg(place) {
   }
 }
 
+/**
+* @description Requests updated place data
+* @description Success triggers function imgCallback
+* @description Required because local lists do not store photo functions
+* @description Saved only the most immutable data locally
+* @param {string} place_id - place object with data and functions
+*/
 function addMissingGMapsImg(place_id) {
   var request = {
     placeId: place_id
   };
-  console.log(request);
   service.getDetails(request, imgCallback);
 }
 
+/**
+* @description If success message, sends result to addGMapsImg
+* @description for addition into infoWindow
+* @param {json string} result - list of place json with data and functions
+* @param {string} status - success/error message from google api
+*/
 function imgCallback(result, status) {
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
     console.error(status);
@@ -501,6 +620,11 @@ function imgCallback(result, status) {
   addGMapsImg(result);
 }
 
+/**
+* @description Requests photo url, creates HTML to display
+* @description Added dynamically to infoWindow
+* @param {json string} place - place object with data and functions
+*/
 function addGMapsImg(place) {
   // Get image URL, if image data present
   placeImgURL = place.photos[0].getUrl({
@@ -510,55 +634,47 @@ function addGMapsImg(place) {
   placeImgHTML = '<div class="col-md-2">' +
               '<img style="float:left" data-bind="attr:{src: placeImgURL, alt: title}" />' +
             '</div>';
-  refreshInfoWindow();
+  infoWindowViewModel.placeImgURL(placeImgURL);
 }
 
+/**
+* @description Adds the Google Maps information (e.g. place's rating & website)
+* @param {json string} place - place object with data and functions
+*/
 function addGMapsInfo(place) {
-  title = place.name;
+  infoWindowViewModel.title(place.name);
 
   if (typeof place.rating != 'undefined') {
-    rating = 'Rating:   ' + place.rating;
+    var rating = 'Rating:   ' + place.rating;
+    infoWindowViewModel.rating(rating);
   }
 
   if (typeof place.website != 'undefined') {
-    websiteText = 'Website';
-    websiteURL = place.website;
+    infoWindowViewModel.websiteText('Website');
+    infoWindowViewModel.websiteURL(place.website);
   }
-  refreshInfoWindow();
 }
 
+/**
+* @description User can save locations locally
+* @description Creates correct element class to indicate if location is saved
+* @param {string} saved - true/false
+*/
 function addSavedIndicator(saved) {
+  var val
   if (saved === true) {
-    saveClass = "material-icons md-dark";
+    val = "material-icons md-dark";
   } else {
-    saveClass = "material-icons md-dark md-inactive text-right";
+    val = "material-icons md-dark md-inactive text-right";
   }
-  refreshInfoWindow();
+  infoWindowViewModel.saveClass(val)
 }
 
-function refreshInfoWindow() {
-  // If infoWindow.content exists, update with new information
-  if (typeof infoWindow.content != 'undefined') {
-    refreshInfoWindowVM();
-    ko.cleanNode(infoWindow.content);
-    ko.applyBindings(infoWindowViewModel, infoWindow.content);
-  }
-}
-
-function refreshInfoWindowVM() {
-  infoWindowViewModel = {
-    title: title,
-    saveClass: saveClass,
-    placeImgURL: placeImgURL,
-    rating: rating,
-    websiteText: websiteText,
-    websiteURL: websiteURL,
-    snippet: snippet,
-    wikiText: wikiText,
-    wikiURL: wikiURL
-  };
-}
-
+/**
+* @description Refreshes infoWindow for use elsewhere on map
+* @description Creates correct element class to indicate if location is saved
+* @param {object} marker - marker object with data and functions
+*/
 function openInfoWindow(marker) {
   infoWindow.setContent(createContent());
   ko.cleanNode(infoWindow.content);
@@ -566,6 +682,11 @@ function openInfoWindow(marker) {
   infoWindow.open(map, marker);
 }
 
+/**
+* @description User can save locations locally
+* @description Calls correct function to toggle saved state of place
+* @param {string} place - place's place_id (placeId in other forms)
+*/
 function toggleSavedPlace(place) {
   if (isSavedPlace(place) === false) {
     addSavedPlace(place);
@@ -574,9 +695,12 @@ function toggleSavedPlace(place) {
   }
 }
 
+/**
+* @description Determines if place is in saved list
+* @param {string} place - place's place_id (placeId in other forms)
+* @returns {boolean} - true if place is in saved list, else false
+*/
 function isSavedPlace(place) {
-  // console.log('place: ' + place.place_id);
-  // console.log(savedPlaces);
   for (site in savedPlaces) {
     if (savedPlaces[site].place_id === place.place_id) {
       return true;
@@ -585,6 +709,13 @@ function isSavedPlace(place) {
   return false;
 }
 
+/**
+* @description Adds place data to savedPlaces list
+* @description Lists keep data, not functions
+* @description Since Google's API can/will return functions this needed to be deconflicted
+* @decription Saves updated savedPlaces locally to persistSavedPlaces
+* @param {string} place - place object with data and functions
+*/
 function addSavedPlace(place) {
   var lat;
   var lng;
@@ -618,6 +749,11 @@ function addSavedPlace(place) {
   localStorage.setItem('persistSavedPlaces', JSON.stringify(savedPlaces));
 }
 
+/**
+* @description Removes place data to savedPlaces list
+* @decription Saves updated savedPlaces locally to persistSavedPlaces
+* @param {string} place - place object with data and functions
+*/
 function removeSavedPlace(place) {
   for (site in savedPlaces) {
     if (savedPlaces[site].place_id === place.place_id) {
@@ -629,9 +765,15 @@ function removeSavedPlace(place) {
   }
 }
 
-// Adapted from code found at:
-// http://stackoverflow.com/questions/31970927/binding-knockoutjs-to-google-maps-infowindow-content
-// Implementation in addMarker differs more significantly from example on page
+
+/**
+* @description HTML for use in InfoWindows
+* @description Called to dynamically load the HTML into infoWindow
+* @description Adapted from code found at:
+* @decription http://stackoverflow.com/questions/31970927/binding-knockoutjs-to-google-maps-infowindow-content
+* @description Implementation in addMarker differs more significantly from example on page
+* @param {string} place - place object with data and functions
+*/
 function createContent() {
   var html;
   // Formatted as HTML for readability
@@ -639,11 +781,11 @@ function createContent() {
             '<div class = "row form-inline">' +
               '<h3 class="col-md-10" data-bind="text: title">' +
               '</h3>' +
-              '<h3 class="col-md-2"> ' + 
+              '<h3 class="col-md-2"> ' +
                 '<div data-bind="attr:{class: saveClass},' +
                   ' click: function() {' +
                     'toggleSavedPlace(curPlaceId);' +
-                  '}' + 
+                  '}' +
                 '">star_rate</div>' +
               '</h3>' +
             '</div>' +
@@ -674,8 +816,11 @@ function createContent() {
   return html;
 }
 
-// Code for sidebar navigation - expand and collapse
-// http://www.w3schools.com/howto/howto_js_sidenav.asp
+/**
+* @description Code for sidebar navigation - expand and collapse
+* @description http://www.w3schools.com/howto/howto_js_sidenav.asp
+*/
+
 var nav = false;
 
 function openNav() {
@@ -695,70 +840,6 @@ function toggleNav() {
     openNav();
   }
 }
-
-var categoryViewModel = {
-  categories: [{
-    id: 1,
-    categoryName: 'Recommended',
-    link: function() {
-      addMarkersFromList(authorFavorites);
-    }
-  }, {
-    id: 2,
-    categoryName: 'Destinations',
-    link: function() {
-      performKeywordSearch('Tourist Destination');
-    }
-  }, {
-    id: 3,
-    categoryName: 'Churches',
-    link: function() {
-      performKeywordSearch('Catholic Church');
-    }
-  }, {
-    id: 4,
-    categoryName: 'Lodging',
-    link: function() {
-      performTypeSearch('lodging');
-    }
-  }, {
-    id: 5,
-    categoryName: 'Museums',
-    link: function() {
-      performTypeSearch('museum');
-    }
-  }, {
-    id: 6,
-    categoryName: 'Restaurants',
-    link: function() {
-      performTypeSearch('restaurant');
-    }
-  }, {
-    id: 7,
-    categoryName: 'Shopping',
-    link: function() {
-      performTypeSearch('store');
-    }
-  }, {
-    id: 8,
-    categoryName: 'Saved',
-    link: function() {
-      addMarkersFromList(savedPlaces);
-    }
-  }]
-};
-
-var infoWindowViewModel = {
-  title: title,
-  saveClass: saveClass,
-  placeImgURL: placeImgURL,
-  rating: rating,
-  websiteText: websiteText,
-  websiteURL: websiteURL,
-  snippet: snippet,
-  wikiText: wikiText,
-  wikiURL: wikiURL
-};
 
 ko.applyBindings({
   categoryViewModel
