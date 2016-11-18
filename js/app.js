@@ -206,7 +206,8 @@ var authorFavorites = [{
       "lng": 12.492230899999981
     }
   },
-  "placeId": "ChIJrRMgU7ZhLxMRxAOFkC7I8Sg"
+  "placeId": "ChIJrRMgU7ZhLxMRxAOFkC7I8Sg",
+  "place_id": "ChIJrRMgU7ZhLxMRxAOFkC7I8Sg"
 },{
   "geometry": {
     "location": {
@@ -214,7 +215,8 @@ var authorFavorites = [{
       "lng": 12.49060170000007
     }
   },
-  "placeId": "ChIJn8yMY7ZhLxMRoGckLEOtWZU"
+  "placeId": "ChIJn8yMY7ZhLxMRoGckLEOtWZU",
+  "place_id": "ChIJn8yMY7ZhLxMRoGckLEOtWZU"
 },{
   "geometry": {
     "location": {
@@ -222,7 +224,8 @@ var authorFavorites = [{
       "lng": 12.473074199999928
     }
   },
-  "placeId": "ChIJPRydwYNgLxMRSjOCLlYkV6M"
+  "placeId": "ChIJPRydwYNgLxMRSjOCLlYkV6M",
+  "place_id": "ChIJPRydwYNgLxMRSjOCLlYkV6M"
 },{
   "geometry": {
     "location": {
@@ -230,7 +233,8 @@ var authorFavorites = [{
       "lng": 12.483312999999953
     }
   },
-  "placeId": "ChIJ1UCDJ1NgLxMRtrsCzOHxdvY"
+  "placeId": "ChIJ1UCDJ1NgLxMRtrsCzOHxdvY",
+  "place_id": "ChIJ1UCDJ1NgLxMRtrsCzOHxdvY"
 },{
   "geometry": {
     "location": {
@@ -238,14 +242,16 @@ var authorFavorites = [{
       "lng": 12.484298999999965
     }
   },
-  "placeId": "ChIJH-4j1LJhLxMR6IviSs42yJ0"
+  "placeId": "ChIJH-4j1LJhLxMR6IviSs42yJ0",
+  "place_id": "ChIJH-4j1LJhLxMR6IviSs42yJ0"
 },{"geometry": {
     "location": {
       "lat": 41.8924623,
       "lng": 12.485324999999989
     }
   },
-  "placeId": "ChIJ782pg7NhLxMR5n3swAdAkfo"
+  "placeId": "ChIJ782pg7NhLxMR5n3swAdAkfo",
+  "place_id": "ChIJ782pg7NhLxMR5n3swAdAkfo"
 },{
   "geometry":{
     "location":{
@@ -253,7 +259,8 @@ var authorFavorites = [{
       "lng": 12.488649500000065
     }
   },
-  "placeId": "ChIJX9gmMbRhLxMRc_L8Li9bAhk"
+  "placeId": "ChIJX9gmMbRhLxMRc_L8Li9bAhk",
+  "place_id": "ChIJX9gmMbRhLxMRc_L8Li9bAhk"
 },{
   "geometry": {
     "location": {
@@ -261,7 +268,8 @@ var authorFavorites = [{
       "lng": 12.471616199999971
     }
   },
-  "placeId": "ChIJL87HTUVgLxMRMJl5wXE4U5o"
+  "placeId": "ChIJL87HTUVgLxMRMJl5wXE4U5o",
+  "place_id": "ChIJL87HTUVgLxMRMJl5wXE4U5o"
 },{
   "geometry": {
     "location": {
@@ -269,7 +277,8 @@ var authorFavorites = [{
       "lng": 12.489454499999965
     }
   },
-  "placeId": "ChIJ7avK3rNhLxMRAouSFEzwbkA"
+  "placeId": "ChIJ7avK3rNhLxMRAouSFEzwbkA",
+  "place_id": "ChIJ7avK3rNhLxMRAouSFEzwbkA"
 },{
   "geometry": {
     "location": {
@@ -277,7 +286,8 @@ var authorFavorites = [{
       "lng": 12.479862300000036
     }
   },
-  "placeId": "ChIJK1-CN0xgLxMRZukH0_lPL70"
+  "placeId": "ChIJK1-CN0xgLxMRZukH0_lPL70",
+  "place_id": "ChIJK1-CN0xgLxMRZukH0_lPL70"
 },{
   "geometry": {
     "location": {
@@ -285,7 +295,8 @@ var authorFavorites = [{
       "lng": 12.47255169999994
     }
   },
-  "placeId": "ChIJ88WtV0VgLxMRUbkqM8OUa4k"
+  "placeId": "ChIJ88WtV0VgLxMRUbkqM8OUa4k",
+  "place_id": "ChIJ88WtV0VgLxMRUbkqM8OUa4k"
 },{
   "geometry": {
     "location": {
@@ -293,7 +304,8 @@ var authorFavorites = [{
       "lng": 12.462295499999982
     }
   },
-  "placeId": "ChIJL-vHo11gLxMRcD2yiIungXY"
+  "placeId": "ChIJL-vHo11gLxMRcD2yiIungXY",
+  "place_id": "ChIJL-vHo11gLxMRcD2yiIungXY"
 }];
 
 var curPlaceId;
@@ -305,8 +317,7 @@ var minRating = 4;
 var savedPlaces = [];
 
 var title;
-var saveImg;
-var saveAlt;
+var saveClass;
 var placeImgHTML;
 var placeImgURL;
 var rating;
@@ -340,6 +351,11 @@ function initMap() {
     performKeywordSearch('Tourist Destination');
   });
 
+}
+
+function userSearch() {
+    var searchTerm = document.getElementById("searchText").value;
+    performKeywordSearch(searchTerm);
 }
 
 function performKeywordSearch(keyword) {
@@ -405,6 +421,7 @@ function addMarker(place) {
   var marker = new google.maps.Marker({
     map: map,
     placeId: place.place_id,
+    place_id: place.place_id,
     position: place.geometry.location
   });
 
@@ -463,24 +480,25 @@ function addPlaceImg(place) {
   if (typeof place.photos != 'undefined') {
     addGMapsImg(place);        // Get image URL, if image data present
   } else {                    // Perform place search, use resulting photo data
-    addMissingGMapsImg(place.placeId);
+    addMissingGMapsImg(place.place_id);
   }
 }
 
-function addMissingGMapsImg(placeId) {
+function addMissingGMapsImg(place_id) {
   var request = {
-    placeId: placeId
+    placeId: place_id
   };
+  console.log(request);
   service.getDetails(request, imgCallback);
 }
 
-function imgCallback(place, status) {
+function imgCallback(result, status) {
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
     console.error(status);
     return;
   }
   // Success - Send place to Img
-  addGMapsImg(place);
+  addGMapsImg(result);
 }
 
 function addGMapsImg(place) {
@@ -511,11 +529,9 @@ function addGMapsInfo(place) {
 
 function addSavedIndicator(saved) {
   if (saved === true) {
-    saveImg = "img/star_saved.png";
-    saveAlt = "Saved";
+    saveClass = "material-icons md-dark";
   } else {
-    saveImg = "img/star_saved_not.png";
-    saveAlt = "Not Saved";
+    saveClass = "material-icons md-dark md-inactive text-right";
   }
   refreshInfoWindow();
 }
@@ -532,8 +548,7 @@ function refreshInfoWindow() {
 function refreshInfoWindowVM() {
   infoWindowViewModel = {
     title: title,
-    saveImg: saveImg,
-    saveAlt: saveAlt,
+    saveClass: saveClass,
     placeImgURL: placeImgURL,
     rating: rating,
     websiteText: websiteText,
@@ -560,8 +575,10 @@ function toggleSavedPlace(place) {
 }
 
 function isSavedPlace(place) {
-  for (var site in savedPlaces) {
-    if (savedPlaces[site].placeId === place.place_id) {
+  // console.log('place: ' + place.place_id);
+  // console.log(savedPlaces);
+  for (site in savedPlaces) {
+    if (savedPlaces[site].place_id === place.place_id) {
       return true;
     }
   }
@@ -586,7 +603,7 @@ function addSavedPlace(place) {
     lng = place.geometry.location.lng;
   }
 
-  var newPlace = {"placeId": place.place_id,
+  var newPlace = {"place_id": place.place_id,
                   "geometry":
                     {"location":
                       {"lat": lat,
@@ -596,13 +613,14 @@ function addSavedPlace(place) {
                  };
   savedPlaces.push(newPlace);
   addSavedIndicator(true);
+  // savedPlaces = [];
   // Save savedPlaces array to localstorage
   localStorage.setItem('persistSavedPlaces', JSON.stringify(savedPlaces));
 }
 
 function removeSavedPlace(place) {
-  for (var site in savedPlaces) {
-    if (savedPlaces[site].placeId === place.place_id) {
+  for (site in savedPlaces) {
+    if (savedPlaces[site].place_id === place.place_id) {
       savedPlaces.splice(site, 1);
       // Save savedPlaces array to localstorage
       localStorage.setItem('persistSavedPlaces', JSON.stringify(savedPlaces));
@@ -618,14 +636,16 @@ function createContent() {
   var html;
   // Formatted as HTML for readability
   html =  '<div id="infoWindow" class="info-window">' +
-            '<div class = "row">' +
-              '<h3 class="col-md-11" data-bind="text: title">' +
+            '<div class = "row form-inline">' +
+              '<h3 class="col-md-10" data-bind="text: title">' +
               '</h3>' +
-                '<img class="col-md-1 float:right" data-bind="attr:{src: saveImg, alt: saveAlt}' +
-                  ', click: function() {' +
+              '<h3 class="col-md-2"> ' + 
+                '<div data-bind="attr:{class: saveClass},' +
+                  ' click: function() {' +
                     'toggleSavedPlace(curPlaceId);' +
-                  "}" + 
-                  '"/>' +
+                  '}' + 
+                '">star_rate</div>' +
+              '</h3>' +
             '</div>' +
             '<div class="info-content"><p>' +
               '<div class = "row">' +
@@ -655,6 +675,7 @@ function createContent() {
 }
 
 // Code for sidebar navigation - expand and collapse
+// http://www.w3schools.com/howto/howto_js_sidenav.asp
 var nav = false;
 
 function openNav() {
@@ -718,11 +739,18 @@ var categoryViewModel = {
     link: function() {
       performTypeSearch('store');
     }
+  }, {
+    id: 8,
+    categoryName: 'Saved',
+    link: function() {
+      addMarkersFromList(savedPlaces);
+    }
   }]
 };
 
 var infoWindowViewModel = {
   title: title,
+  saveClass: saveClass,
   placeImgURL: placeImgURL,
   rating: rating,
   websiteText: websiteText,

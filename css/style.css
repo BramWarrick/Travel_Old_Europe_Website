@@ -3,7 +3,6 @@
 #map {
 height: 100%;
 background-color: 5 px #b5b292;
-border-radius: 12px;
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
@@ -31,6 +30,39 @@ body {
   color: #000000;
 }
 
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.material-icons.md-dark {
+  color: #FDD835;
+}
+
+.material-icons.md-dark.md-inactive {
+  color: #BDBDBD;
+}
+
 .sidenav {
   height: 100%;
   width: 0;
@@ -38,17 +70,19 @@ body {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #c4ac7c;
+  /*background-color: #FAF4DE;*/
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
 }
 
 .sidenav .col-md-12 {
-  padding: 8px 8px 8px 16px;
+  padding: 8px 8px 8px 24px;
   text-decoration: none;
-  font-size: 25px;
-  color: #818181;
+  font-size: 22px;
+  color: #000000;
+  text-shadow:0px 0px 8px #b5b292;
   display: block;
   transition: 0.3s
 }
@@ -56,8 +90,10 @@ body {
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
-  color: #818181;
+  font-size: 18px;
+  color: #000000;
+  text-shadow:0px 0px 8px #b5b292;
+  /*text-shadow:0px 0px 8px #FFFFFF;*/
   display: block;
   transition: 0.3s
 }
