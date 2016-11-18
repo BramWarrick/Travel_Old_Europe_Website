@@ -1,3 +1,5 @@
+// "use strict";
+
 var categoryViewModel = {
   categories: [{
     id: 1,
@@ -264,112 +266,165 @@ var mapStyleValues = [{
 }];
 
 var authorFavorites = [{
-  "geometry": {
-    "location": {
-      "lat": 41.89021020000001,
-      "lng": 12.492230899999981
-    }
-  },
-  "placeId": "ChIJrRMgU7ZhLxMRxAOFkC7I8Sg",
-  "place_id": "ChIJrRMgU7ZhLxMRxAOFkC7I8Sg"
-},{
-  "geometry": {
-    "location": {
-      "lat": 41.8897697,
-      "lng": 12.49060170000007
-    }
-  },
-  "placeId": "ChIJn8yMY7ZhLxMRoGckLEOtWZU",
-  "place_id": "ChIJn8yMY7ZhLxMRoGckLEOtWZU"
-},{
-  "geometry": {
-    "location": {
-      "lat": 41.8991633,
-      "lng": 12.473074199999928
-    }
-  },
-  "placeId": "ChIJPRydwYNgLxMRSjOCLlYkV6M",
-  "place_id": "ChIJPRydwYNgLxMRSjOCLlYkV6M"
-},{
-  "geometry": {
-    "location": {
-      "lat": 41.9009325,
-      "lng": 12.483312999999953
-    }
-  },
-  "placeId": "ChIJ1UCDJ1NgLxMRtrsCzOHxdvY",
-  "place_id": "ChIJ1UCDJ1NgLxMRtrsCzOHxdvY"
-},{
-  "geometry": {
-    "location": {
-      "lat": 41.895833,
-      "lng": 12.484298999999965
-    }
-  },
-  "placeId": "ChIJH-4j1LJhLxMR6IviSs42yJ0",
-  "place_id": "ChIJH-4j1LJhLxMR6IviSs42yJ0"
-},{"geometry": {
-    "location": {
-      "lat": 41.8924623,
-      "lng": 12.485324999999989
-    }
-  },
-  "placeId": "ChIJ782pg7NhLxMR5n3swAdAkfo",
-  "place_id": "ChIJ782pg7NhLxMR5n3swAdAkfo"
-},{
+  "place_id":"ChIJrRMgU7ZhLxMRxAOFkC7I8Sg",
+  "placeId":"ChIJrRMgU7ZhLxMRxAOFkC7I8Sg",
+  "name":"Colosseum",
   "geometry":{
     "location":{
-      "lat": 41.8906973,
-      "lng": 12.488649500000065
+      "lat":41.89021020000001,
+      "lng":12.492230899999981
     }
-  },
-  "placeId": "ChIJX9gmMbRhLxMRc_L8Li9bAhk",
-  "place_id": "ChIJX9gmMbRhLxMRc_L8Li9bAhk"
+  }
 },{
-  "geometry": {
-    "location": {
-      "lat": 41.89925940000001,
-      "lng": 12.471616199999971
+  "place_id":"ChIJ782pg7NhLxMR5n3swAdAkfo",
+  "placeId":"ChIJ782pg7NhLxMR5n3swAdAkfo",
+  "name":"Roman Forum",
+  "geometry":{
+    "location":{
+      "lat":41.8924623,
+      "lng":12.485324999999989
     }
-  },
-  "placeId": "ChIJL87HTUVgLxMRMJl5wXE4U5o",
-  "place_id": "ChIJL87HTUVgLxMRMJl5wXE4U5o"
+  }
 },{
-  "geometry": {
-    "location": {
-      "lat": 41.89412430000001,
-      "lng": 12.489454499999965
+  "place_id":"ChIJH-4j1LJhLxMR6IviSs42yJ0",
+  "placeId":"ChIJH-4j1LJhLxMR6IviSs42yJ0",
+  "name":"Trajan's Column",
+  "geometry":{
+    "location":{
+      "lat":41.895833,
+      "lng":12.484298999999965
     }
-  },
-  "placeId": "ChIJ7avK3rNhLxMRAouSFEzwbkA",
-  "place_id": "ChIJ7avK3rNhLxMRAouSFEzwbkA"
+  }
 },{
-  "geometry": {
-    "location": {
-      "lat": 41.89592440000001,
-      "lng": 12.479862300000036
+  "place_id":"ChIJPRydwYNgLxMRSjOCLlYkV6M",
+  "placeId":"ChIJPRydwYNgLxMRSjOCLlYkV6M",
+  "name":"Piazza Navona",
+  "geometry":{
+    "location":{
+      "lat":41.8991633,
+      "lng":12.473074199999928
     }
-  },
-  "placeId": "ChIJK1-CN0xgLxMRZukH0_lPL70",
-  "place_id": "ChIJK1-CN0xgLxMRZukH0_lPL70"
+  }
 },{
-  "geometry": {
-    "location": {
-      "lat": 41.8988438,
-      "lng": 12.47255169999994
+  "place_id":"ChIJqUCGZ09gLxMRLM42IPpl0co",
+  "placeId":"ChIJqUCGZ09gLxMRLM42IPpl0co",
+  "name":"Pantheon",
+  "geometry":{
+    "location":{
+      "lat":41.8986108,
+      "lng":12.47687289999999
     }
-  },
-  "placeId": "ChIJ88WtV0VgLxMRUbkqM8OUa4k",
-  "place_id": "ChIJ88WtV0VgLxMRUbkqM8OUa4k"
+  }
 },{
-  "geometry": {
-    "location": {
-      "lat": 41.9027135,
-      "lng": 12.462295499999982
+  "place_id":"ChIJ1UCDJ1NgLxMRtrsCzOHxdvY",
+  "placeId":"ChIJ1UCDJ1NgLxMRtrsCzOHxdvY",
+  "name":"Trevi Fountain",
+  "geometry":{
+    "location":{
+      "lat":41.9009325,
+      "lng":12.483312999999953
     }
-  },
-  "placeId": "ChIJL-vHo11gLxMRcD2yiIungXY",
-  "place_id": "ChIJL-vHo11gLxMRcD2yiIungXY"
+  }
+},{
+  "place_id":"ChIJG6cU-09gLxMR8hkxk2gJcFI",
+  "placeId":"ChIJG6cU-09gLxMR8hkxk2gJcFI",
+  "name":"Fiumi Fountain",
+  "geometry":{
+    "location":{
+      "lat":41.8989673,
+      "lng":12.473087200000009
+    }
+  }
+},{
+  "place_id":"ChIJ88WtV0VgLxMRUbkqM8OUa4k",
+  "placeId":"ChIJ88WtV0VgLxMRUbkqM8OUa4k",
+  "name":"Sant'Agnese in Agone",
+  "geometry":{
+    "location":{
+      "lat":41.8988438,
+      "lng":12.47255169999994
+    }
+  }
+},{
+  "place_id":"ChIJL87HTUVgLxMRMJl5wXE4U5o",
+  "placeId":"ChIJL87HTUVgLxMRMJl5wXE4U5o",
+  "name":"Saltimbocca ristorante",
+  "geometry":{
+    "location":{
+      "lat":41.89925940000001,
+      "lng":12.471616199999971
+    }
+  }
+},{
+  "place_id":"ChIJ7avK3rNhLxMRAouSFEzwbkA",
+  "placeId":"ChIJ7avK3rNhLxMRAouSFEzwbkA",
+  "name":"Taverna Romana",
+  "geometry":{
+    "location":{
+      "lat":41.89412430000001,
+      "lng":12.489454499999965
+    }
+  }
+},{
+  "place_id":"ChIJX9gmMbRhLxMRc_L8Li9bAhk",
+  "placeId":"ChIJX9gmMbRhLxMRc_L8Li9bAhk",
+  "name":"Arch of Titus",
+  "geometry":{
+    "location":{
+      "lat":41.8906973,
+      "lng":12.488649500000065
+    }
+  }
+},{
+  "place_id":"ChIJr3gt3ExgLxMRYaivihEa9K0",
+  "placeId":"ChIJr3gt3ExgLxMRYaivihEa9K0",
+  "name":"Piazza Venezia",
+  "geometry":{
+    "location":{
+      "lat":41.89576630000001,
+      "lng":12.482573900000034
+    }
+  }
+},{
+  "place_id":"ChIJr2C1NU1gLxMRAQ8Cfk1debk",
+  "placeId":"ChIJr2C1NU1gLxMRAQ8Cfk1debk",
+  "name":"Palazzo Valentini",
+  "geometry":{
+    "location":{
+      "lat":41.8960502,
+      "lng":12.484070999999972
+    }
+  }
+},{
+  "place_id":"ChIJdQnXoVxgLxMRCQK0txZGq6g",
+  "placeId":"ChIJdQnXoVxgLxMRCQK0txZGq6g",
+  "name":"St. Angelo Bridge",
+  "geometry":{
+    "location":{
+      "lat":41.901788,
+      "lng":12.466461699999968
+    }
+  }
+},{
+  "place_id":"ChIJK1-CN0xgLxMRZukH0_lPL70",
+  "placeId":"ChIJK1-CN0xgLxMRZukH0_lPL70",
+  "name":"Chiesa del Gesù",
+  "geometry":{
+    "location":{
+      "lat":41.89592440000001,
+      "lng":12.479862300000036
+    }
+  }
+},{
+  "place_id":"ChIJL-vHo11gLxMRcD2yiIungXY",
+  "placeId":"ChIJL-vHo11gLxMRcD2yiIungXY",
+  "name":"Santa Maria in Traspontina",
+  "geometry":{
+    "location":{
+      "lat":41.9027135,
+      "lng":12.462295499999982
+    }
+  }
 }];
 
 var curPlaceId;
@@ -379,6 +434,8 @@ var service;
 var markers = [];
 var minRating = 4;
 var savedPlaces = [];
+var loadedPlaces = ko.observableArray([]);
+var placeImgHTML;
 
 /**
 * @description Initializes map
@@ -387,11 +444,11 @@ var savedPlaces = [];
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
-      lat: 41.88973272,
-      lng: 12.49120496
+      lat: 41.89592440000001,
+      lng: 12.479862300000036
 
     },
-    zoom: 16,
+    zoom: 15,
     styles: mapStyleValues
   });
 
@@ -402,6 +459,7 @@ function initMap() {
   var localSave = localStorage.getItem('persistSavedPlaces');
   if (localSave != 'undefined' && localSave !== null) {
     savedPlaces = JSON.parse(localSave);
+    // console.log(localSave);
   }
 
   google.maps.event.addListenerOnce(map, 'idle', function() {
@@ -427,6 +485,7 @@ function userSearch() {
 */
 function performKeywordSearch(keyword) {
   deleteMarkers();
+  loadedPlaces([]);
 
   var request = {
     bounds: map.getBounds(),
@@ -446,6 +505,7 @@ function performKeywordSearch(keyword) {
 */
 function performTypeSearch(type) {
   deleteMarkers();
+  loadedPlaces([]);
 
   var request = {
     bounds: map.getBounds(),
@@ -465,6 +525,8 @@ function performTypeSearch(type) {
 */
 function addMarkersFromList(list) {
   deleteMarkers();
+  loadedPlaces([]);
+
   for (entry in list) {
     addMarker(list[entry]);
   }
@@ -504,6 +566,21 @@ function callback(results, status) {
 }
 
 /**
+* @description Helper function to sort loadedPlaces
+* @description Place name is ideal sort, helps with Places tab
+* @param a - first entry in list
+* @param b - next entry in list
+* @return value for sort
+*/
+function sortLoadedPlacesByName(a,b) {
+  if (a.name < b.name)
+    return -1;
+  if (a.name > b.name)
+    return 1;
+  return 0;
+}
+
+/**
 * @description Creates a single marker, based on place data
 * @description Listener is created for InfoWindow
 * @param {json string} place - list of place data (e.g placeId, photos, lat/lng)
@@ -511,10 +588,17 @@ function callback(results, status) {
 function addMarker(place) {
   var marker = new google.maps.Marker({
     map: map,
+    name: place.name,
     placeId: place.place_id,
     place_id: place.place_id,
     position: place.geometry.location
   });
+
+  marker.link = function() {
+    loadInfoWindow(marker, place)
+  };
+  loadedPlaces.push(marker);
+  loadedPlaces.sort(sortLoadedPlacesByName);
 
   /**
   * @description LISTENER: Loads InfoWindow data asynchronously
@@ -526,23 +610,27 @@ function addMarker(place) {
   google.maps.event.addListener(marker, 'click', (function(marker, place) {
 
     return function() {
-      service.getDetails(place, function(result, status) {
-        if (status !== google.maps.places.PlacesServiceStatus.OK) {
-          console.error(status);
-          return;
-        }
-        // Used for toggleSavedPlace - allows html to refer to variable
-        curPlaceId = place;
-        // Wikipedia sentences and link are added to infoWindow if/when data is returned
-        addWikiInfo(result.name);               // asynchronous
-        addPlaceImg(place);                     // asynchronous
-        addSavedIndicator(isSavedPlace(place)); // local
-        addGMapsInfo(result);                   // Add name, photo, rating, website
-        openInfoWindow(marker);
-      });
+      loadInfoWindow(marker, place)
     };
   })(marker, place));
   markers.push(marker);
+}
+
+function loadInfoWindow(marker, place) {
+  service.getDetails(place, function(result, status) {
+    if (status !== google.maps.places.PlacesServiceStatus.OK) {
+      console.error(status);
+      return;
+    }
+    // Used for toggleSavedPlace - allows html to refer to variable
+    curPlaceId = place;
+    // Wikipedia sentences and link are added to infoWindow if/when data is returned
+    addWikiInfo(result.name);               // asynchronous
+    addPlaceImg(place);                     // asynchronous
+    addSavedIndicator(isSavedPlace(place)); // local
+    addGMapsInfo(result);                   // Add name, photo, rating, website
+    openInfoWindow(marker);
+  });
 }
 
 /**
@@ -555,13 +643,16 @@ function addWikiInfo(site) {
   var remoteUrl = "https://en.wikipedia.org/w/api.php?&action=query&prop=info|extracts&inprop=url&exsentences=4&explaintext=&titles=" + site + "&format=json&redirects=1&callback=wikiCallback";
   infoWindowViewModel.wikiURL("");
   infoWindowViewModel.snippet("");
-  infoWindowViewModel.wikiText("");
+  infoWindowViewModel.wikiText("No article available");
 
   $.ajax({
     url: remoteUrl,
     dataType: 'jsonp',
     success: function(data) {
       var pages = data.query.pages;
+      var wikiURL;
+      var snippet;
+      var wikiText;
 
       // Always maximum of one page returned, but id is unknown; loop
       for (var page in pages) {
@@ -569,9 +660,15 @@ function addWikiInfo(site) {
         wikiURL = wikiURL.replace(/['"]+/g, '');
         snippet = pages[page].extract;
       }
+      wikiText = 'Wiki';
+
       infoWindowViewModel.wikiURL(wikiURL);
-      infoWindowViewModel.snippet(snippet);
-      infoWindowViewModel.wikiText('Wiki');
+      infoWindowViewModel.wikiText(wikiText);
+      if (typeof snippet != 'undefined') {
+        infoWindowViewModel.snippet(snippet);
+      } else {
+        infoWindowViewModel.snippet('No article available');
+      }
     }
   });
 }
@@ -627,7 +724,7 @@ function imgCallback(result, status) {
 */
 function addGMapsImg(place) {
   // Get image URL, if image data present
-  placeImgURL = place.photos[0].getUrl({
+  var placeImgURL = place.photos[0].getUrl({
     'maxWidth': 75,
     'maxHeight': 75
   });
@@ -735,6 +832,8 @@ function addSavedPlace(place) {
   }
 
   var newPlace = {"place_id": place.place_id,
+                  "placeId": place.place_id,
+                  "name": place.name,
                   "geometry":
                     {"location":
                       {"lat": lat,
@@ -824,7 +923,7 @@ function createContent() {
 var nav = false;
 
 function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("mySidenav").style.width = "350px";
   nav = true;
 }
 

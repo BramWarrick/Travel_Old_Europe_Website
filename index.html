@@ -16,26 +16,47 @@
 
   <body class = "container-fluid">
 
-    <span id="site-title" style="font-size:30px;cursor:pointer" onclick="toggleNav()">&#9776; Travel Dreamer Planner</span>
-
     <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick='closeNav()'>&times;</a>
-      <input type="text" id="searchText">
-      <button onclick="userSearch()">Search</button>
-      <div class='row'>
-        <div class='col-md-12'>
-          Categories
+      <div class="form-group row">
+        <div class="col-sm-6 col-sm-offset-1">
+          <input class="form-control col-sm-offest-1" type="text" id="searchText">
+        </div>
+        <div class="col-sm-3">
+          <button class="btn btn-primary" onclick="userSearch()">Search</button>
+        </div>
+        <div class='col-sm-1'>
+          <button type="button" class="close" aria-label="Close" onclick='closeNav()'><span aria-hidden="true">&times;</span></button>
         </div>
       </div>
-      <div data-bind="foreach: categoryViewModel.categories">
-        <div class='row'>
-          <div class='col-md-12'>
-            <a href="#" data-bind="text: categoryName, click: link"></a>
+        <div class="tabbable">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#categories" data-toggle="tab">Categories</a></li>
+            <li><a href="#places" data-toggle="tab">Places</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="categories">
+              <div data-bind="foreach: categoryViewModel.categories">
+                <div class="row">
+                  <div class="col-md-12">
+                    <a href="#" data-bind="text: categoryName, click: link"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="places">
+              <div data-bind="foreach: loadedPlaces">
+                <div class="row">
+                  <div class="col-md-12">
+                    <a href="#" data-bind="text: name, click: link"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <p>
-    </div>
+    <span id="site-title" style="font-size:30px;cursor:pointer" onclick="toggleNav()">&#9776; Travel Dreamer Planner</span>
+
 
     <div id="map"></div>
 
