@@ -64,6 +64,23 @@ var infoWindowViewModel = {
   wikiURL: ko.observable("")
 };
 
+var creditsViewModel = {
+  credits: [
+  {
+    id: 1,
+    creditText: 'Marker Icons',
+    link: function() {
+      openWebsite('https://icons8.com/')
+    }
+  }, {
+    id: 2,
+    creditText: 'Tabbed Bootstrap',
+    link: function() {
+      openWebsite('http://stackoverflow.com/questions/18432577/stacked-tabs-in-bootstrap-3')
+    }
+  }
+]}
+
 var mapStyleValues = [{
   elementType: 'geometry',
   stylers: [{
@@ -427,18 +444,25 @@ var authorFavorites = [{
   }
 }];
 
-var curPlaceId;
+// Map, markers, infowindow
 var map;
 var infoWindow;
 var service;
+var selectedMarker;
 var markers = [];
+var displayedPlaces = ko.observableArray([]);
+
+// Custom Experience
 var minRating = 4;
 var savedPlaces = [];
-var loadedPlaces = ko.observableArray([]);
-var placeImgHTML;
+
+// HTML Management
+var curPlaceId;
+var placeImgHTML = '';
 
 /**
 * @description Initializes map
+* @description Loads persisted saved place data, if it exists
 * @description Runs once html page is loaded
 */
 function initMap() {
@@ -468,6 +492,8 @@ function initMap() {
 
 }
 
+// ***** Searches *****
+
 /**
 * @description Runs user directed search, allowing search terms
 * @description Value is pulled from input box on index.html
@@ -484,8 +510,8 @@ function userSearch() {
 * @param {string} keyword - requests and loads markers based on keyword search
 */
 function performKeywordSearch(keyword) {
-  deleteMarkers();
-  loadedPlaces([]);
+  removeMarkers();
+  displayedPlaces([]);
 
   var request = {
     bounds: map.getBounds(),
@@ -504,8 +530,8 @@ function performKeywordSearch(keyword) {
 * @param {string} type - requests and loads markers based on place type
 */
 function performTypeSearch(type) {
-  deleteMarkers();
-  loadedPlaces([]);
+  removeMarkers();
+  displayedPlaces([]);
 
   var request = {
     bounds: map.getBounds(),
@@ -517,32 +543,7 @@ function performTypeSearch(type) {
   service.nearbySearch(request, callback);
 }
 
-/**
-* @description Requests location data based on place type
-* @description https://developers.google.com/places/supported_types
-* @description Results NOT limited to bounds of map
-* @param {list} list - list with place information (placeId, lat/lng)
-*/
-function addMarkersFromList(list) {
-  deleteMarkers();
-  loadedPlaces([]);
-
-  for (entry in list) {
-    addMarker(list[entry]);
-  }
-}
-
-/**
-* @description Removes markers as part of UI refresh
-* @description adaptation of code found:
-* @description https: developers.google.com/maps/documentation/javascript/examples/marker-remove
-*/
-function deleteMarkers() {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-  }
-  markers = [];
-}
+// ***** Search marker spooling *****
 
 /**
 * @description Uses google maps service reply to load markers on screen
@@ -565,40 +566,65 @@ function callback(results, status) {
   }
 }
 
+// ***** Marker list spooling *****
+
 /**
-* @description Helper function to sort loadedPlaces
-* @description Place name is ideal sort, helps with Places tab
-* @param a - first entry in list
-* @param b - next entry in list
-* @return value for sort
+* @description Requests location data based on place type
+* @description https://developers.google.com/places/supported_types
+* @description Results NOT limited to bounds of map
+* @param {list} list - list with place information (placeId, lat/lng)
 */
-function sortLoadedPlacesByName(a,b) {
-  if (a.name < b.name)
-    return -1;
-  if (a.name > b.name)
-    return 1;
-  return 0;
+function addMarkersFromList(list) {
+  removeMarkers();
+  displayedPlaces([]);
+
+  for (entry in list) {
+    addMarker(list[entry]);
+  }
 }
+
+
+// ***** Create and Remove Markers *****
 
 /**
 * @description Creates a single marker, based on place data
-* @description Listener is created for InfoWindow
+* @description  - Listener is created for InfoWindow
 * @param {json string} place - list of place data (e.g placeId, photos, lat/lng)
 */
 function addMarker(place) {
+
+  var iconOptions = getIconOptions('red');
+
   var marker = new google.maps.Marker({
     map: map,
     name: place.name,
+    icon: iconOptions,
     placeId: place.place_id,
     place_id: place.place_id,
-    position: place.geometry.location
+    position: place.geometry.location,
+    title: place.name
   });
 
+  // JavaScript events for places tab on UI
   marker.link = function() {
-    loadInfoWindow(marker, place)
+    selectedMarker = marker;
+    loadInfoWindow(marker, place);
   };
-  loadedPlaces.push(marker);
-  loadedPlaces.sort(sortLoadedPlacesByName);
+
+  marker.mouseover = function() {
+    if (marker != selectedMarker) {
+      setMarkerColor(marker, 'blue');
+    }
+  };
+
+  marker.mouseout = function() {
+    if (marker != selectedMarker) {
+      setMarkerColor(marker, 'red');
+    }
+  };
+
+  displayedPlaces.push(marker);
+  displayedPlaces.sort(sortDisplayedPlacesByName);
 
   /**
   * @description LISTENER: Loads InfoWindow data asynchronously
@@ -610,11 +636,82 @@ function addMarker(place) {
   google.maps.event.addListener(marker, 'click', (function(marker, place) {
 
     return function() {
-      loadInfoWindow(marker, place)
+      selectedMarker = marker;
+      loadInfoWindow(marker, place);
     };
   })(marker, place));
   markers.push(marker);
 }
+
+/**
+* @description Removes markers as part of UI refresh
+* @description adaptation of code found:
+* @description https: developers.google.com/maps/documentation/javascript/examples/marker-remove
+*/
+function removeMarkers() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+  markers = [];
+}
+
+/**
+* @description Helper function to sort displayedPlaces
+* @description Place name is ideal sort, helps with Places tab
+* @param a - first entry in list
+* @param b - next entry in list
+* @return value for sort
+*/
+function sortDisplayedPlacesByName(a,b) {
+  if (a.name < b.name)
+    return -1;
+  if (a.name > b.name)
+    return 1;
+  return 0;
+}
+
+// ***** Marker Controllers *****
+
+
+/**
+* @description Resets all markers to the color red
+* @description Required for when infoWindow is opened elsewhere, but not closed
+*/
+function setMarkersRed() {
+  var iconOptions = getIconOptions('red');
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setIcon(iconOptions);
+  }
+}
+
+/**
+* @description Sets marker to identified color
+* @param {google marker} marker - Marker to set color
+* @param {string} color - red, blue or brown are supported
+*/
+function setMarkerColor(marker, color) {
+  var iconOptions = getIconOptions(color);
+  marker.setIcon(iconOptions);
+}
+
+/**
+* @description Creates and returns icon options for markers
+* @description Successful response causes updates to observable variables
+* @description based on marker clicks - ensuring one infoWindow at a time
+* @param {string} color - red, blue or brown are supported
+* @returns iconOptions - set of values to ensure proper placement and color of marker
+*/
+function getIconOptions(color) {
+  var iconOptions = {
+      url: 'img/icons8/vintage-' + color + '-512.png',
+      size: new google.maps.Size(71, 71),
+      anchor: new google.maps.Point(17, 35),
+      scaledSize: new google.maps.Size(35, 35)
+    };
+  return iconOptions;
+}
+
+// ***** InfoWindow Controllers *****
 
 function loadInfoWindow(marker, place) {
   service.getDetails(place, function(result, status) {
@@ -622,6 +719,7 @@ function loadInfoWindow(marker, place) {
       console.error(status);
       return;
     }
+
     // Used for toggleSavedPlace - allows html to refer to variable
     curPlaceId = place;
     // Wikipedia sentences and link are added to infoWindow if/when data is returned
@@ -632,6 +730,11 @@ function loadInfoWindow(marker, place) {
     openInfoWindow(marker);
   });
 }
+
+// ***** InfoWindow Information Calls *****
+
+
+// *** Wikipedia ***
 
 /**
 * @description Request data from Wikipedia
@@ -672,6 +775,8 @@ function addWikiInfo(site) {
     }
   });
 }
+
+// *** Google Place Image ***
 
 /**
 * @description Checks for photos within place
@@ -752,20 +857,7 @@ function addGMapsInfo(place) {
   }
 }
 
-/**
-* @description User can save locations locally
-* @description Creates correct element class to indicate if location is saved
-* @param {string} saved - true/false
-*/
-function addSavedIndicator(saved) {
-  var val
-  if (saved === true) {
-    val = "material-icons md-dark";
-  } else {
-    val = "material-icons md-dark md-inactive text-right";
-  }
-  infoWindowViewModel.saveClass(val)
-}
+// ***** Open InfoWindow *****
 
 /**
 * @description Refreshes infoWindow for use elsewhere on map
@@ -776,8 +868,46 @@ function openInfoWindow(marker) {
   infoWindow.setContent(createContent());
   ko.cleanNode(infoWindow.content);
   ko.applyBindings(infoWindowViewModel, infoWindow.content);
+
+  // Required for when infoWindow is moved, rather than closed and opened
+  // closeclick event to re-color marker is handled in infoWindow event, below
+  setMarkersRed();
+  // Active marker is turned brown
+  setMarkerColor(marker, 'brown');
+
+  // Re-center after icon shifted infoWindow to the right
+  var infoWindowOptions = {
+    pixelOffset: new google.maps.Size(-19, 0)
+  };
+  infoWindow.setOptions(infoWindowOptions);
+
   infoWindow.open(map, marker);
+
+  google.maps.event.addListener(infoWindow,'closeclick',function() {
+    selectedMarker =
+      // Marker is no longer active, set color to red
+      setMarkerColor(marker, 'red');
+  });
 }
+
+// ***** Saved Location UI for InfoWindow*****
+
+/**
+* @description User can save locations locally
+* @description Creates correct element class to indicate if location is saved
+* @param {string} saved - true/false
+*/
+function addSavedIndicator(saved) {
+  var val;
+  if (saved === true) {
+    val = "material-icons md-dark";
+  } else {
+    val = "material-icons md-dark md-inactive text-right";
+  }
+  infoWindowViewModel.saveClass(val);
+}
+
+// ***** Saved Location Management *****
 
 /**
 * @description User can save locations locally
@@ -864,6 +994,7 @@ function removeSavedPlace(place) {
   }
 }
 
+// ***** InfoWindow Content HTML *****
 
 /**
 * @description HTML for use in InfoWindows
@@ -915,6 +1046,8 @@ function createContent() {
   return html;
 }
 
+// ***** SideNav Section *****
+
 /**
 * @description Code for sidebar navigation - expand and collapse
 * @description http://www.w3schools.com/howto/howto_js_sidenav.asp
@@ -943,3 +1076,9 @@ function toggleNav() {
 ko.applyBindings({
   categoryViewModel
 });
+
+// ***** Credits *****
+
+function openWebsite(URL) {
+  window.open(URL);
+}

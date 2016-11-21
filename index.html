@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Travel Roma</title>
+    <title>Discover Old Europe</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
-    <meta name="Travelling Rome" content="Page dedicated to exploring Rome." />
-    <!-- <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" /> -->
+    <meta name="Travel Planner" content="Page dedicated to exploring old Europe." />
+    <link rel="shortcut icon" type="image/x-icon" href="img/icons8/map-and-marker.png" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -28,33 +28,46 @@
           <button type="button" class="close" aria-label="Close" onclick='closeNav()'><span aria-hidden="true">&times;</span></button>
         </div>
       </div>
-        <div class="tabbable">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#categories" data-toggle="tab">Categories</a></li>
-            <li><a href="#places" data-toggle="tab">Places</a></li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="categories">
-              <div data-bind="foreach: categoryViewModel.categories">
-                <div class="row">
-                  <div class="col-md-12">
-                    <a href="#" data-bind="text: categoryName, click: link"></a>
-                  </div>
+      <!--Adapted from code found on Stack Overflow
+      http://stackoverflow.com/questions/18432577/stacked-tabs-in-bootstrap-3 -->
+      <div class="tabbable">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#categories" data-toggle="tab">Categories</a></li>
+          <li><a href="#places" data-toggle="tab">Places</a></li>
+          <li><a href="#credits" data-toggle="tab">Credits</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="categories">
+            <div data-bind="foreach: categoryViewModel.categories">
+              <div class="row">
+                <div class="col-md-12">
+                  <a href="#" data-bind="text: categoryName, click: link"></a>
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="places">
-              <div data-bind="foreach: loadedPlaces">
-                <div class="row">
-                  <div class="col-md-12">
-                    <a href="#" data-bind="text: name, click: link"></a>
-                  </div>
+          </div>
+          <div class="tab-pane" id="places">
+            <div data-bind="foreach: displayedPlaces">
+              <div class="row">
+                <div class="col-md-12">
+                  <a href="#" data-bind="text: name, click: link,
+                  event: { mouseover: mouseover, mouseout: mouseout }"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="credits">
+            <div data-bind="foreach: creditsViewModel.credits">
+              <div class="row">
+                <div class="col-md-12">
+                  <a href="#" data-bind="text: creditText, click: link"></a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
     <span id="site-title" style="font-size:30px;cursor:pointer" onclick="toggleNav()">&#9776; Travel Dreamer Planner</span>
 
 
