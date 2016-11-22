@@ -1,4 +1,11 @@
-/*jshint esversion: 6 */
+// Creates stylized map for planning trips to old Europe
+// or merely dreaming of visiting.
+
+// Loads a map with vintage effects with markers of recommended places
+// Categories to the left allow the user to dive into the most common tourist destinations
+// of old Europe (e.g tourist destinations, restuarants, old Catholic Churches)
+
+// Created November 2016
 
 var categoryViewModel = {
   categories: [{
@@ -460,6 +467,10 @@ var savedPlaces = [];
 var curPlaceId;
 var placeImgHTML = '';
 
+function googleError() {
+  window.alert('Connection interrupted. Google Maps could not load.');
+}
+
 /**
 * @description Initializes map
 * @description Loads persisted saved place data, if it exists
@@ -483,7 +494,6 @@ function initMap() {
   var localSave = localStorage.getItem('persistSavedPlaces');
   if (localSave != 'undefined' && localSave !== null) {
     savedPlaces = JSON.parse(localSave);
-    // console.log(localSave);
   }
 
   google.maps.event.addListenerOnce(map, 'idle', function() {
@@ -558,10 +568,8 @@ function callback(results, status) {
   }
   // Success - Write markers to map
   for (var i = 0; i < results.length; i++) {
-  //   var result = results[i];
-  // for (var i = 0; result = results[i]; i++) {
     // Only write markers with a rating higher than minRating
-    // Also filters those with no rating
+    // Secondary effect: filters out results with no rating
     if (results[i].rating > minRating) {
       addMarker(results[i]);
     }
@@ -724,11 +732,14 @@ function loadInfoWindow(marker, place) {
 
     // Used for toggleSavedPlace - allows html to refer to variable
     curPlaceId = place;
+    // Asynchronous functions
     // Wikipedia sentences and link are added to infoWindow if/when data is returned
-    addWikiInfo(result.name);               // asynchronous
-    addPlaceImg(place);                     // asynchronous
-    addSavedIndicator(isSavedPlace(place)); // local
-    addGMapsInfo(result);                   // Add name, photo, rating, website
+    addWikiInfo(result.name);
+    addPlaceImg(place);
+    // Local data
+    addSavedIndicator(isSavedPlace(place));
+    // Add name, photo, rating, website
+    addGMapsInfo(result);
     openInfoWindow(marker);
   });
 }
