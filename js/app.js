@@ -1,4 +1,4 @@
-// "use strict";
+/*jshint esversion: 6 */
 
 var categoryViewModel = {
   categories: [{
@@ -70,16 +70,16 @@ var creditsViewModel = {
     id: 1,
     creditText: 'Marker Icons',
     link: function() {
-      openWebsite('https://icons8.com/')
+      openWebsite('https://icons8.com/');
     }
   }, {
     id: 2,
     creditText: 'Tabbed Bootstrap',
     link: function() {
-      openWebsite('http://stackoverflow.com/questions/18432577/stacked-tabs-in-bootstrap-3')
+      openWebsite('http://stackoverflow.com/questions/18432577/stacked-tabs-in-bootstrap-3');
     }
   }
-]}
+]};
 
 var mapStyleValues = [{
   elementType: 'geometry',
@@ -557,11 +557,13 @@ function callback(results, status) {
     return;
   }
   // Success - Write markers to map
-  for (var i = 0, result; result = results[i]; i++) {
+  for (var i = 0; i < results.length; i++) {
+  //   var result = results[i];
+  // for (var i = 0; result = results[i]; i++) {
     // Only write markers with a rating higher than minRating
     // Also filters those with no rating
-    if (result.rating > minRating) {
-      addMarker(result);
+    if (results[i].rating > minRating) {
+      addMarker(results[i]);
     }
   }
 }
@@ -578,8 +580,8 @@ function addMarkersFromList(list) {
   removeMarkers();
   displayedPlaces([]);
 
-  for (entry in list) {
-    addMarker(list[entry]);
+  for (var i = 0; i < list.length; i++) {
+    addMarker(list[i]);
   }
 }
 
@@ -758,10 +760,10 @@ function addWikiInfo(site) {
       var wikiText;
 
       // Always maximum of one page returned, but id is unknown; loop
-      for (var page in pages) {
-        wikiURL = pages[page].fullurl;
+      for (var i = 0; i < pages.length; i++) {
+        wikiURL = pages[i].fullurl;
         wikiURL = wikiURL.replace(/['"]+/g, '');
-        snippet = pages[page].extract;
+        snippet = pages[i].extract;
       }
       wikiText = 'Wiki';
 
@@ -928,7 +930,7 @@ function toggleSavedPlace(place) {
 * @returns {boolean} - true if place is in saved list, else false
 */
 function isSavedPlace(place) {
-  for (site in savedPlaces) {
+  for (var site in savedPlaces) {
     if (savedPlaces[site].place_id === place.place_id) {
       return true;
     }
@@ -984,9 +986,9 @@ function addSavedPlace(place) {
 * @param {string} place - place object with data and functions
 */
 function removeSavedPlace(place) {
-  for (site in savedPlaces) {
-    if (savedPlaces[site].place_id === place.place_id) {
-      savedPlaces.splice(site, 1);
+  for (var i = 0; i < savedPlaces.length; i++) {
+    if (savedPlaces[i].place_id === place.place_id) {
+      savedPlaces.splice(i, 1);
       // Save savedPlaces array to localstorage
       localStorage.setItem('persistSavedPlaces', JSON.stringify(savedPlaces));
       addSavedIndicator(false);
