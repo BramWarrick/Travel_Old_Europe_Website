@@ -1,3 +1,5 @@
+"use strict";
+
 /**
 * Creates stylized map for planning trips to old Europe
 * or merely dreaming of visiting.
@@ -463,6 +465,7 @@ var map;
 var infoWindow;
 var service;
 var selectedMarker;
+var searchTerm;
 var markers = [];
 var displayedPlaces = ko.observableArray([]);
 
@@ -518,7 +521,6 @@ function initMap() {
 * @description Value is pulled from input box on index.html
 */
 function userSearch() {
-    var searchTerm = document.getElementById("searchText").value;
     performKeywordSearch(searchTerm);
 }
 
@@ -576,14 +578,14 @@ function performTypeSearch(type) {
 function callback(results, status) {
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
     console.error(status);
-    return;
-  }
-  // Success - Write markers to map
-  for (var i = 0; i < results.length; i++) {
-    // Only write markers with a rating higher than minRating
-    // Secondary effect: filters out results with no rating
-    if (results[i].rating > minRating) {
-      addMarker(results[i]);
+  } else {
+    // Success - Write markers to map
+    for (var i = 0; i < results.length; i++) {
+      // Only write markers with a rating higher than minRating
+      // Secondary effect: filters out results with no rating
+      if (results[i].rating > minRating) {
+        addMarker(results[i]);
+      }
     }
   }
 }
@@ -608,6 +610,15 @@ function addMarkersFromList(list) {
   }
 }
 
+function addMarkersFromListSearch(list) {
+  removeMarkers();
+  displayedPlaces([]);
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].name.search(searchTerm) !== -1) {
+          addMarker(list[i]);
+    }
+  }
+}
 
 /**
 ***** Create and Remove Markers *****
@@ -665,6 +676,7 @@ function addMarker(place) {
 
     return function() {
       selectedMarker = marker;
+      // map.panTo(marker.getPosition());
       loadInfoWindow(marker, place);
     };
   })(marker, place));
@@ -748,20 +760,19 @@ function loadInfoWindow(marker, place) {
   service.getDetails(place, function(result, status) {
     if (status !== google.maps.places.PlacesServiceStatus.OK) {
       console.error(status);
-      return;
+    } else {
+      // Used for toggleSavedPlace - allows html to refer to variable
+      curPlaceId = place;
+      // Asynchronous functions
+      // Wikipedia sentences and link are added to infoWindow if/when data is returned
+      addWikiInfo(result.name);
+      addPlaceImg(place);
+      // Local data
+      addSavedIndicator(isSavedPlace(place));
+      // Add name, photo, rating, website
+      addGMapsInfo(result);
+      openInfoWindow(marker);
     }
-
-    // Used for toggleSavedPlace - allows html to refer to variable
-    curPlaceId = place;
-    // Asynchronous functions
-    // Wikipedia sentences and link are added to infoWindow if/when data is returned
-    addWikiInfo(result.name);
-    addPlaceImg(place);
-    // Local data
-    addSavedIndicator(isSavedPlace(place));
-    // Add name, photo, rating, website
-    addGMapsInfo(result);
-    openInfoWindow(marker);
   });
 }
 
@@ -784,11 +795,16 @@ function addWikiInfo(site) {
   var remoteUrl = "https://en.wikipedia.org/w/api.php?&action=query&prop=info|extracts&inprop=url&exsentences=4&explaintext=&titles=" + site + "&format=json&redirects=1&callback=wikiCallback";
   infoWindowViewModel.wikiURL("");
   infoWindowViewModel.snippet("");
-  infoWindowViewModel.wikiText("No article available");
+  infoWindowViewModel.wikiText("");
 
   $.ajax({
     url: remoteUrl,
     dataType: 'jsonp',
+    error: function (err) {
+            // Other values set appropriately at beginning of function
+            infoWindowViewModel.wikiText("No article available. Possible connection interruption.");
+            console.log("AJAX error in request: " + JSON.stringify(err, null, 2));
+          },
     success: function(data) {
       var pages = data.query.pages;
       var wikiURL;
@@ -796,7 +812,10 @@ function addWikiInfo(site) {
       var wikiText;
 
       // Always maximum of one page returned, but id is unknown; loop
+      // Breaks strict rule, due to variability in returned value
+      // Uncomment console.log line to see effects
       for (var i in pages) {
+        // console.log(i);
         wikiURL = pages[i].fullurl;
         wikiURL = wikiURL.replace(/['"]+/g, '');
         snippet = pages[i].extract;
@@ -856,10 +875,10 @@ function addMissingGMapsImg(place_id) {
 function imgCallback(result, status) {
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
     console.error(status);
-    return;
+  } else {
+    // Success - Send place to Img
+    addGMapsImg(result);
   }
-  // Success - Send place to Img
-  addGMapsImg(result);
 }
 
 /**
@@ -974,8 +993,8 @@ function toggleSavedPlace(place) {
 * @returns {boolean} - true if place is in saved list, else false
 */
 function isSavedPlace(place) {
-  for (var site in savedPlaces) {
-    if (savedPlaces[site].place_id === place.place_id) {
+  for (var i = 0; i < savedPlaces.length; i++) {
+    if (savedPlaces[i].place_id === place.place_id) {
       return true;
     }
   }
