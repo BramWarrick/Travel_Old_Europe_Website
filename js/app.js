@@ -1,12 +1,16 @@
-// Creates stylized map for planning trips to old Europe
-// or merely dreaming of visiting.
+/**
+* Creates stylized map for planning trips to old Europe
+* or merely dreaming of visiting.
+*
+* Loads a map with vintage effects with markers of recommended places
+* Categories to the left allow the user to dive into the most common tourist destinations
+* of old Europe (e.g tourist destinations, restuarants, old Catholic Churches)
+*
+* Created November 2016
+*/
 
-// Loads a map with vintage effects with markers of recommended places
-// Categories to the left allow the user to dive into the most common tourist destinations
-// of old Europe (e.g tourist destinations, restuarants, old Catholic Churches)
-
-// Created November 2016
-
+// Listing of categories and their click events for UI
+// Used with knockout.js functionality
 var categoryViewModel = {
   categories: [{
     id: 1,
@@ -59,6 +63,7 @@ var categoryViewModel = {
   }]
 };
 
+// InfoWindow variables, populated later in code
 var infoWindowViewModel = {
   title: ko.observable(""),
   saveClass: ko.observable(""),
@@ -71,6 +76,7 @@ var infoWindowViewModel = {
   wikiURL: ko.observable("")
 };
 
+// Credits, shown in tab on UI's Navigation Panel
 var creditsViewModel = {
   credits: [
   {
@@ -88,6 +94,7 @@ var creditsViewModel = {
   }
 ]};
 
+// Google's stylineg values; used to create a somewhat vintage look
 var mapStyleValues = [{
   elementType: 'geometry',
   stylers: [{
@@ -502,7 +509,9 @@ function initMap() {
 
 }
 
-// ***** Searches *****
+/**
+***** Searches *****
+*/
 
 /**
 * @description Runs user directed search, allowing search terms
@@ -553,7 +562,10 @@ function performTypeSearch(type) {
   service.nearbySearch(request, callback);
 }
 
-// ***** Search marker spooling *****
+/**
+***** Search Marker Spooling *****
+*/
+
 
 /**
 * @description Uses google maps service reply to load markers on screen
@@ -576,7 +588,10 @@ function callback(results, status) {
   }
 }
 
-// ***** Marker list spooling *****
+/**
+***** Marker List Spooling *****
+*/
+
 
 /**
 * @description Requests location data based on place type
@@ -594,7 +609,10 @@ function addMarkersFromList(list) {
 }
 
 
-// ***** Create and Remove Markers *****
+/**
+***** Create and Remove Markers *****
+*/
+
 
 /**
 * @description Creates a single marker, based on place data
@@ -643,7 +661,7 @@ function addMarker(place) {
   * @param {object} marker - marker object with data and functions
   * @param {json string} place - place object with data and functions
   */
-  google.maps.event.addListener(marker, 'click', (function(marker, place) {
+  marker.addListener('click', (function(marker, place) {
 
     return function() {
       selectedMarker = marker;
@@ -680,8 +698,9 @@ function sortDisplayedPlacesByName(a,b) {
   return 0;
 }
 
-// ***** Marker Controllers *****
-
+/**
+***** Marker Controllers *****
+*/
 
 /**
 * @description Resets all markers to the color red
@@ -721,7 +740,9 @@ function getIconOptions(color) {
   return iconOptions;
 }
 
-// ***** InfoWindow Controllers *****
+/**
+***** InfoWindow Controllers *****
+*/
 
 function loadInfoWindow(marker, place) {
   service.getDetails(place, function(result, status) {
@@ -744,10 +765,14 @@ function loadInfoWindow(marker, place) {
   });
 }
 
-// ***** InfoWindow Information Calls *****
 
+/**
+***** InfoWindow Information Calls *****
+*/
 
-// *** Wikipedia ***
+/**
+  *** Wikipedia ***
+*/
 
 /**
 * @description Request data from Wikipedia
@@ -771,7 +796,7 @@ function addWikiInfo(site) {
       var wikiText;
 
       // Always maximum of one page returned, but id is unknown; loop
-      for (var i = 0; i < pages.length; i++) {
+      for (var i in pages) {
         wikiURL = pages[i].fullurl;
         wikiURL = wikiURL.replace(/['"]+/g, '');
         snippet = pages[i].extract;
@@ -789,7 +814,9 @@ function addWikiInfo(site) {
   });
 }
 
-// *** Google Place Image ***
+/**
+  *** Google Place Image ***
+*/
 
 /**
 * @description Checks for photos within place
@@ -870,7 +897,9 @@ function addGMapsInfo(place) {
   }
 }
 
-// ***** Open InfoWindow *****
+/**
+***** Open InfoWindow *****
+*/
 
 /**
 * @description Refreshes infoWindow for use elsewhere on map
@@ -896,14 +925,16 @@ function openInfoWindow(marker) {
 
   infoWindow.open(map, marker);
 
-  google.maps.event.addListener(infoWindow,'closeclick',function() {
-    selectedMarker =
-      // Marker is no longer active, set color to red
-      setMarkerColor(marker, 'red');
+  infoWindow.addListener('closeclick',function() {
+    selectedMarker = ''
+    // Marker is no longer active, set color to red
+    setMarkerColor(marker, 'red');
   });
 }
 
-// ***** Saved Location UI for InfoWindow*****
+/**
+***** Saved Location UI for InfoWindow*****
+*/
 
 /**
 * @description User can save locations locally
@@ -920,7 +951,9 @@ function addSavedIndicator(saved) {
   infoWindowViewModel.saveClass(val);
 }
 
-// ***** Saved Location Management *****
+/**
+***** Saved Location Management *****
+*/
 
 /**
 * @description User can save locations locally
@@ -1007,7 +1040,9 @@ function removeSavedPlace(place) {
   }
 }
 
-// ***** InfoWindow Content HTML *****
+/**
+***** InfoWindow Content HTML *****
+*/
 
 /**
 * @description HTML for use in InfoWindows
@@ -1028,6 +1063,8 @@ function createContent() {
                 '<div data-bind="attr:{class: saveClass},' +
                   ' click: function() {' +
                     'toggleSavedPlace(curPlaceId);' +
+                  ' closeclick: function() {' +
+                    'setMarkersRed();' +
                   '}' +
                 '">star_rate</div>' +
               '</h3>' +
@@ -1059,7 +1096,9 @@ function createContent() {
   return html;
 }
 
-// ***** SideNav Section *****
+/**
+***** SideNav Section *****
+*/
 
 /**
 * @description Code for sidebar navigation - expand and collapse
@@ -1090,7 +1129,9 @@ ko.applyBindings({
   categoryViewModel
 });
 
-// ***** Credits *****
+/**
+***** Credits *****
+*/
 
 function openWebsite(URL) {
   window.open(URL);

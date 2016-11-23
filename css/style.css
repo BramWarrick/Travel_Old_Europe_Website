@@ -56,11 +56,11 @@ body {
 }
 
 .material-icons.md-dark {
-  color: #FDD835;
+  color: #fdd835;
 }
 
 .material-icons.md-dark.md-inactive {
-  color: #BDBDBD;
+  color: #bdbdbd;
 }
 
 .sidenav {
@@ -71,7 +71,6 @@ body {
   top: 0;
   left: 0;
   background-color: #ccc9b3;
-  /*background-color: #FAF4DE;*/
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 20px;
