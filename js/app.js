@@ -926,7 +926,7 @@ function openInfoWindow(marker) {
   infoWindow.open(map, marker);
 
   infoWindow.addListener('closeclick',function() {
-    selectedMarker = ''
+    selectedMarker = '';
     // Marker is no longer active, set color to red
     setMarkerColor(marker, 'red');
   });
