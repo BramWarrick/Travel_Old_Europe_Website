@@ -11,6 +11,10 @@
 
 // Listing of categories and their click events for UI
 // Used with knockout.js functionality
+/* global $ */
+/* global ko */
+/* global google */
+
 var categoryViewModel = {
   categories: [{
     id: 1,
