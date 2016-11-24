@@ -611,12 +611,19 @@ function addMarkersFromList(list) {
 }
 
 function addMarkersFromListSearch(list) {
-  removeMarkers();
-  displayedPlaces([]);
+  var markerFilter = [];
+
+  // Filter current markers based on search term; create new list
   for (var i = 0; i < list.length; i++) {
-    if (list[i].name.search(searchTerm) !== -1) {
-          addMarker(list[i]);
+    if (list[i].name.search(new RegExp(searchTerm, "i")) !== -1) {
+      markerFilter.push(list[i]);
     }
+  }
+  // Load new list of markers
+  setMarkersVisiblility(false);
+  displayedPlaces([]);
+  for (var i = 0; i < markerFilter.length; i++) {
+    addMarker(markerFilter[i]);
   }
 }
 
@@ -633,6 +640,15 @@ function addMarkersFromListSearch(list) {
 function addMarker(place) {
 
   var iconOptions = getIconOptions('red');
+  var position;
+
+  // position is required by google for marker placement; use best value
+  try {
+    position = place.geometry.location;
+  }
+  catch (e) {
+    position = place.position;
+  }
 
   var marker = new google.maps.Marker({
     map: map,
@@ -640,7 +656,7 @@ function addMarker(place) {
     icon: iconOptions,
     placeId: place.place_id,
     place_id: place.place_id,
-    position: place.geometry.location,
+    position: position,
     title: place.name
   });
 
@@ -693,6 +709,12 @@ function removeMarkers() {
     markers[i].setMap(null);
   }
   markers = [];
+}
+
+function setMarkersVisiblility(bool) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setVisible(bool);
+  }
 }
 
 /**
