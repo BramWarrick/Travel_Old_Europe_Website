@@ -1,5 +1,3 @@
-"use strict";
-
 /**
 * Creates stylized map for planning trips to old Europe
 * or merely dreaming of visiting.
@@ -478,6 +476,7 @@ var curPlaceId;
 var placeImgHTML = '';
 
 function googleError() {
+  "use strict";
   window.alert('Connection interrupted. Google Maps could not load.');
 }
 
@@ -487,6 +486,7 @@ function googleError() {
 * @description Runs once html page is loaded
 */
 function initMap() {
+  "use strict";
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
       lat: 41.89592440000001,
@@ -521,7 +521,8 @@ function initMap() {
 * @description Value is pulled from input box on index.html
 */
 function userSearch() {
-    performKeywordSearch(searchTerm);
+  "use strict";
+  performKeywordSearch(searchTerm);
 }
 
 /**
@@ -531,6 +532,7 @@ function userSearch() {
 * @param {string} keyword - requests and loads markers based on keyword search
 */
 function performKeywordSearch(keyword) {
+  "use strict";
   removeMarkers();
   displayedPlaces([]);
 
@@ -551,6 +553,7 @@ function performKeywordSearch(keyword) {
 * @param {string} type - requests and loads markers based on place type
 */
 function performTypeSearch(type) {
+  "use strict";
   removeMarkers();
   displayedPlaces([]);
 
@@ -576,6 +579,7 @@ function performTypeSearch(type) {
 * @param {string} status - success/failure message from google api
 */
 function callback(results, status) {
+  "use strict";
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
     console.error(status);
   } else {
@@ -602,6 +606,7 @@ function callback(results, status) {
 * @param {list} list - list with place information (placeId, lat/lng)
 */
 function addMarkersFromList(list) {
+  "use strict";
   removeMarkers();
   displayedPlaces([]);
 
@@ -611,6 +616,7 @@ function addMarkersFromList(list) {
 }
 
 function addMarkersFromListSearch(list) {
+  "use strict";
   var markerFilter = [];
 
   // Filter current markers based on search term; create new list
@@ -622,7 +628,7 @@ function addMarkersFromListSearch(list) {
   // Load new list of markers
   setMarkersVisiblility(false);
   displayedPlaces([]);
-  for (var i = 0; i < markerFilter.length; i++) {
+  for (i = 0; i < markerFilter.length; i++) {
     addMarker(markerFilter[i]);
   }
 }
@@ -638,7 +644,7 @@ function addMarkersFromListSearch(list) {
 * @param {json string} place - list of place data (e.g placeId, photos, lat/lng)
 */
 function addMarker(place) {
-
+  "use strict";
   var iconOptions = getIconOptions('red');
   var position;
 
@@ -705,6 +711,7 @@ function addMarker(place) {
 * @description https: developers.google.com/maps/documentation/javascript/examples/marker-remove
 */
 function removeMarkers() {
+  "use strict";
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
   }
@@ -712,6 +719,7 @@ function removeMarkers() {
 }
 
 function setMarkersVisiblility(bool) {
+  "use strict";
   for (var i = 0; i < markers.length; i++) {
     markers[i].setVisible(bool);
   }
@@ -725,6 +733,7 @@ function setMarkersVisiblility(bool) {
 * @return value for sort
 */
 function sortDisplayedPlacesByName(a,b) {
+  "use strict";
   if (a.name < b.name)
     return -1;
   if (a.name > b.name)
@@ -741,6 +750,7 @@ function sortDisplayedPlacesByName(a,b) {
 * @description Required for when infoWindow is opened elsewhere, but not closed
 */
 function setMarkersRed() {
+  "use strict";
   var iconOptions = getIconOptions('red');
   for (var i = 0; i < markers.length; i++) {
     markers[i].setIcon(iconOptions);
@@ -753,6 +763,7 @@ function setMarkersRed() {
 * @param {string} color - red, blue or brown are supported
 */
 function setMarkerColor(marker, color) {
+  "use strict";
   var iconOptions = getIconOptions(color);
   marker.setIcon(iconOptions);
 }
@@ -765,6 +776,7 @@ function setMarkerColor(marker, color) {
 * @returns iconOptions - set of values to ensure proper placement and color of marker
 */
 function getIconOptions(color) {
+  "use strict";
   var iconOptions = {
       url: 'img/icons8/vintage-' + color + '-512.png',
       size: new google.maps.Size(71, 71),
@@ -779,6 +791,7 @@ function getIconOptions(color) {
 */
 
 function loadInfoWindow(marker, place) {
+  "use strict";
   service.getDetails(place, function(result, status) {
     if (status !== google.maps.places.PlacesServiceStatus.OK) {
       console.error(status);
@@ -814,6 +827,7 @@ function loadInfoWindow(marker, place) {
 * @param {string} site - location name
 */
 function addWikiInfo(site) {
+  "use strict";
   var remoteUrl = "https://en.wikipedia.org/w/api.php?&action=query&prop=info|extracts&inprop=url&exsentences=4&explaintext=&titles=" + site + "&format=json&redirects=1&callback=wikiCallback";
   infoWindowViewModel.wikiURL("");
   infoWindowViewModel.snippet("");
@@ -867,6 +881,7 @@ function addWikiInfo(site) {
 * @param {json string} place - place object with data and functions
 */
 function addPlaceImg(place) {
+  "use strict";
   if (typeof place.photos != 'undefined') {
     addGMapsImg(place);        // Get image URL, if image data present
   } else {                    // Perform place search, use resulting photo data
@@ -882,6 +897,7 @@ function addPlaceImg(place) {
 * @param {string} place_id - place object with data and functions
 */
 function addMissingGMapsImg(place_id) {
+  "use strict";
   var request = {
     placeId: place_id
   };
@@ -895,6 +911,7 @@ function addMissingGMapsImg(place_id) {
 * @param {string} status - success/error message from google api
 */
 function imgCallback(result, status) {
+  "use strict";
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
     console.error(status);
   } else {
@@ -909,6 +926,7 @@ function imgCallback(result, status) {
 * @param {json string} place - place object with data and functions
 */
 function addGMapsImg(place) {
+  "use strict";
   // Get image URL, if image data present
   var placeImgURL = place.photos[0].getUrl({
     'maxWidth': 75,
@@ -925,6 +943,7 @@ function addGMapsImg(place) {
 * @param {json string} place - place object with data and functions
 */
 function addGMapsInfo(place) {
+  "use strict";
   infoWindowViewModel.title(place.name);
 
   if (typeof place.rating != 'undefined') {
@@ -948,6 +967,7 @@ function addGMapsInfo(place) {
 * @param {object} marker - marker object with data and functions
 */
 function openInfoWindow(marker) {
+  "use strict";
   infoWindow.setContent(createContent());
   ko.cleanNode(infoWindow.content);
   ko.applyBindings(infoWindowViewModel, infoWindow.content);
@@ -983,6 +1003,7 @@ function openInfoWindow(marker) {
 * @param {string} saved - true/false
 */
 function addSavedIndicator(saved) {
+  "use strict";
   var val;
   if (saved === true) {
     val = "material-icons md-dark";
@@ -1002,6 +1023,7 @@ function addSavedIndicator(saved) {
 * @param {string} place - place's place_id (placeId in other forms)
 */
 function toggleSavedPlace(place) {
+  "use strict";
   if (isSavedPlace(place) === false) {
     addSavedPlace(place);
   } else {
@@ -1015,6 +1037,7 @@ function toggleSavedPlace(place) {
 * @returns {boolean} - true if place is in saved list, else false
 */
 function isSavedPlace(place) {
+  "use strict";
   for (var i = 0; i < savedPlaces.length; i++) {
     if (savedPlaces[i].place_id === place.place_id) {
       return true;
@@ -1031,6 +1054,7 @@ function isSavedPlace(place) {
 * @param {string} place - place object with data and functions
 */
 function addSavedPlace(place) {
+  "use strict";
   var lat;
   var lng;
   // If lat/lng are functions, use functions
@@ -1071,6 +1095,7 @@ function addSavedPlace(place) {
 * @param {string} place - place object with data and functions
 */
 function removeSavedPlace(place) {
+  "use strict";
   for (var i = 0; i < savedPlaces.length; i++) {
     if (savedPlaces[i].place_id === place.place_id) {
       savedPlaces.splice(i, 1);
@@ -1094,6 +1119,7 @@ function removeSavedPlace(place) {
 * @param {string} place - place object with data and functions
 */
 function createContent() {
+  "use strict";
   var html;
   // Formatted as HTML for readability
   html =  '<div id="infoWindow" class="info-window">' +
@@ -1149,16 +1175,19 @@ function createContent() {
 var nav = false;
 
 function openNav() {
+  "use strict";
   document.getElementById("mySidenav").style.width = "350px";
   nav = true;
 }
 
 function closeNav() {
+  "use strict";
   document.getElementById("mySidenav").style.width = "0px";
   nav = false;
 }
 
 function toggleNav() {
+  "use strict";
   if (nav) {
     closeNav();
   } else {
@@ -1167,6 +1196,7 @@ function toggleNav() {
 }
 
 ko.applyBindings({
+  "use strict";
   categoryViewModel
 });
 
@@ -1175,5 +1205,6 @@ ko.applyBindings({
 */
 
 function openWebsite(URL) {
+  "use strict";
   window.open(URL);
 }
