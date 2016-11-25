@@ -622,10 +622,13 @@ function addMarkersFromList(list) {
 function addMarkersFromListSearch(list) {
   "use strict";
   var markerFilter = [];
+  console.log(markerFilter);
 
   // Filter current markers based on search term; create new list
   for (var i=0, l=list.length; i<l; i++) {
     if (list[i].name.search(new RegExp(searchTerm, "i")) !== -1) {
+      console.log(list[i]);
+      console.log(i);
       markerFilter.push(list[i]);
     }
   }
@@ -706,7 +709,9 @@ function addMarker(place) {
       loadInfoWindow(marker, place);
     };
   })(marker, place));
-  markers.push(marker);
+  if (isInMarkers(marker) === false) {
+      markers.push(marker);
+    }
 }
 
 /**
@@ -722,6 +727,22 @@ function removeMarkers() {
   markers = [];
 }
 
+
+/**
+* @description Returns true/false of whether marker's placeId is already in markers array
+* @param marker - google maps marker for comparison to markers array
+* @returns {boolean} - true if marker's placeId is in markers array, else false
+*/
+function isInMarkers(marker) {
+  for (var i=0, l=markers.length; i<l; i++) {
+    if (markers[i].placeId === marker.placeId) {
+      console.log('true');
+      return true
+    }
+  }
+  return false
+}
+
 function setMarkersVisiblility(bool) {
   "use strict";
   for (var i=0, l=markers.length; i<l; i++) {
@@ -734,7 +755,7 @@ function setMarkersVisiblility(bool) {
 * @description Place name is ideal sort, helps with Places tab
 * @param a - first entry in list
 * @param b - next entry in list
-* @return value for sort
+* @returns value for sort
 */
 function sortDisplayedPlacesByName(a,b) {
   "use strict";
