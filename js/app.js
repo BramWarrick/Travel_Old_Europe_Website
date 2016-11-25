@@ -583,6 +583,7 @@ function performTypeSearch(type) {
 */
 function callback(results, status) {
   "use strict";
+  removeMarkers();
   if (status !== google.maps.places.PlacesServiceStatus.OK) {
     console.error(status);
   } else {
@@ -618,31 +619,10 @@ function addMarkersFromList(list) {
   }
 }
 
-function addMarkersFromListSearch(list) {
-  "use strict";
-  var markerFilter = [];
-  console.log(markerFilter);
-
-  // Filter current markers based on search term; create new list
-  for (var i=0, l=list.length; i<l; i++) {
-    if (list[i].name.search(new RegExp(searchTerm, "i")) !== -1) {
-      console.log(list[i]);
-      console.log(i);
-      markerFilter.push(list[i]);
-    }
-  }
-  // Load new list of markers
-  setMarkersVisiblility(false);
-  displayedPlaces([]);
-  for (i=0, l=markerFilter.length; i<l; i++) {
-    addMarker(markerFilter[i]);
-  }
-}
 
 /**
-***** Create and Remove Markers *****
+***** Add and Remove Markers *****
 */
-
 
 /**
 * @description Creates a single marker, based on place data
@@ -724,6 +704,7 @@ function removeMarkers() {
     markers[i].setMap(null);
   }
   markers = [];
+  displayedPlaces([]);
 }
 
 
@@ -735,17 +716,21 @@ function removeMarkers() {
 function isInMarkers(marker) {
   for (var i=0, l=markers.length; i<l; i++) {
     if (markers[i].placeId === marker.placeId) {
-      console.log('true');
-      return true
+      return true;
     }
   }
-  return false
+  return false;
 }
 
-function setMarkersVisiblility(bool) {
+/**
+* @description Sets Google markers to visible (true) or invisible (false)
+* @param {marker list} list - google maps markers
+* @param {boolean} - true if to be visible, else false
+*/
+function setMarkersVisiblility(list, bool) {
   "use strict";
-  for (var i=0, l=markers.length; i<l; i++) {
-    markers[i].setVisible(bool);
+  for (var i=0, l=list.length; i<l; i++) {
+    list[i].setVisible(bool);
   }
 }
 
@@ -768,6 +753,42 @@ function sortDisplayedPlacesByName(a,b) {
 /**
 ***** Marker Controllers *****
 */
+
+/**
+* @description Requests location data based on place type
+* @description https://developers.google.com/places/supported_types
+* @description Results NOT limited to bounds of map
+* @param {list} list - list with place information (placeId, lat/lng)
+*/
+function filterMarkersBySearch(list) {
+  "use strict";
+  var markerFilter = [];
+
+  // Filter current markers based on search term; create new list
+  for (var i=0, l=list.length; i<l; i++) {
+    if (list[i].name.search(new RegExp(searchTerm, "i")) !== -1) {
+      markerFilter.push(list[i]);
+    }
+  }
+  applyFilter(markerFilter);
+}
+
+/**
+* @description Requests location data based on place type
+* @description https://developers.google.com/places/supported_types
+* @description Results NOT limited to bounds of map
+* @param {list} list - list with place information (placeId, lat/lng)
+*/
+function applyFilter(list) {
+  "use strict";
+  setMarkersVisiblility(markers, false);
+  displayedPlaces([]);
+
+  for (var i=0, l=list.length; i<l; i++) {
+    list[i].setVisible(true);
+    displayedPlaces.push(list[i]);
+  }
+}
 
 /**
 * @description Resets all markers to the color red
