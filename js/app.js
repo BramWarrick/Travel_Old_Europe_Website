@@ -871,6 +871,7 @@ function addWikiInfo(site) {
       var wikiURL;
       var snippet;
       var wikiText;
+      var wikiError;
 
       // Always maximum of one page returned, but id is unknown; loop
       // Breaks strict rule, due to variability in returned value
@@ -889,6 +890,7 @@ function addWikiInfo(site) {
         infoWindowViewModel.snippet(snippet);
       } else {
         infoWindowViewModel.snippet('No article available');
+        infoWindowViewModel.wikiError('Possible connection interruption.');
       }
     }
   });
