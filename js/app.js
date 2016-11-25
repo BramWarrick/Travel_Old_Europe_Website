@@ -11,9 +11,7 @@
 
 // Listing of categories and their click events for UI
 // Used with knockout.js functionality
-/* global $ */
-/* global ko */
-/* global google */
+/* global $, ko, google */
 
 var categoryViewModel = {
   categories: [{
@@ -77,7 +75,8 @@ var infoWindowViewModel = {
   websiteURL: ko.observable(""),
   snippet: ko.observable(""),
   wikiText: ko.observable(""),
-  wikiURL: ko.observable("")
+  wikiURL: ko.observable(""),
+  wikiError: ko.observable(""),
 };
 
 // Credits, shown in tab on UI's Navigation Panel
@@ -857,13 +856,14 @@ function addWikiInfo(site) {
   infoWindowViewModel.wikiURL("");
   infoWindowViewModel.snippet("");
   infoWindowViewModel.wikiText("");
+  infoWindowViewModel.wikiError("");
 
   $.ajax({
     url: remoteUrl,
     dataType: 'jsonp',
     error: function (err) {
             // Other values set appropriately at beginning of function
-            infoWindowViewModel.wikiText("No article available. Possible connection interruption.");
+            infoWindowViewModel.wikiError("No article available. Possible connection interruption.");
             console.log("AJAX error in request: " + JSON.stringify(err, null, 2));
           },
     success: function(data) {
@@ -1180,6 +1180,9 @@ function createContent() {
               '</div>' +
               '<div class = "row">' +
                 '<a class = "col-md-12" target="_blank" data-bind="text: wikiText, attr: {href: wikiURL}"></a>'+
+              '</div>' +
+              '<div class = "row">' +
+                '<div class = "col-md-12" target="_blank" data-bind="text: wikiError">'+
                 '</div>' +
               '</div>' +
             '</p></div>' +
@@ -1220,9 +1223,7 @@ function toggleNav() {
   }
 }
 
-ko.applyBindings({
-  categoryViewModel
-});
+ko.applyBindings(categoryViewModel);
 
 /**
 ***** Credits *****
