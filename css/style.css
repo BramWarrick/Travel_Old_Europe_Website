@@ -7,7 +7,8 @@
 
 
 /* Optional: Makes the sample page fill the window. */
-html, body {
+html,
+body {
   height: 95%;
   margin: 0;
   padding: 0;
@@ -32,13 +33,13 @@ body {
 
 
 .info-window {
-  text-shadow:0px 0px 8px #b5b292;
-  color: #000000;
+  text-shadow: 0 0 8px #b5b292;
+  color: #000;
 }
 
 
 .material-icons {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
   font-size: 24px;  /* Preferred icon size */
@@ -92,7 +93,7 @@ body {
   text-decoration: none;
   font-size: 22px;
   color: #000000;
-  text-shadow:0px 0px 8px #b5b292;
+  text-shadow: 0 0 8px #b5b292;
   display: block;
   transition: 0.3s
 }
@@ -103,13 +104,14 @@ body {
   text-decoration: none;
   font-size: 18px;
   color: #000000;
-  text-shadow:0px 0px 8px #b5b292;
+  text-shadow: 0 0 8px #b5b292;
   display: block;
   transition: 0.3s
 }
 
 
-.sidenav a:hover, .offcanvas a:focus{
+.sidenav a:hover,
+.offcanvas a:focus{
   color: #f1f1f1;
 }
 

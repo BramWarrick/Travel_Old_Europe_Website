@@ -588,7 +588,7 @@ function callback(results, status) {
     console.error(status);
   } else {
     // Success - Write markers to map
-    for (var i = 0; i < results.length; i++) {
+    for (var i=0, l=results.length; i<l; i++) {
       // Only write markers with a rating higher than minRating
       // Secondary effect: filters out results with no rating
       if (results[i].rating > minRating) {
@@ -614,7 +614,7 @@ function addMarkersFromList(list) {
   removeMarkers();
   displayedPlaces([]);
 
-  for (var i = 0; i < list.length; i++) {
+  for (var i=0, l=list.length; i<l; i++) {
     addMarker(list[i]);
   }
 }
@@ -624,7 +624,7 @@ function addMarkersFromListSearch(list) {
   var markerFilter = [];
 
   // Filter current markers based on search term; create new list
-  for (var i = 0; i < list.length; i++) {
+  for (var i=0, l=list.length; i<l; i++) {
     if (list[i].name.search(new RegExp(searchTerm, "i")) !== -1) {
       markerFilter.push(list[i]);
     }
@@ -632,7 +632,7 @@ function addMarkersFromListSearch(list) {
   // Load new list of markers
   setMarkersVisiblility(false);
   displayedPlaces([]);
-  for (i = 0; i < markerFilter.length; i++) {
+  for (i=0, l=markerFilter.length; i<l; i++) {
     addMarker(markerFilter[i]);
   }
 }
@@ -716,7 +716,7 @@ function addMarker(place) {
 */
 function removeMarkers() {
   "use strict";
-  for (var i = 0; i < markers.length; i++) {
+  for (var i=0, l=markers.length; i<l; i++) {
     markers[i].setMap(null);
   }
   markers = [];
@@ -724,7 +724,7 @@ function removeMarkers() {
 
 function setMarkersVisiblility(bool) {
   "use strict";
-  for (var i = 0; i < markers.length; i++) {
+  for (var i=0, l=markers.length; i<l; i++) {
     markers[i].setVisible(bool);
   }
 }
@@ -756,7 +756,7 @@ function sortDisplayedPlacesByName(a,b) {
 function setMarkersRed() {
   "use strict";
   var iconOptions = getIconOptions('red');
-  for (var i = 0; i < markers.length; i++) {
+  for (var i=0, l=markers.length; i<l; i++) {
     markers[i].setIcon(iconOptions);
   }
 }
@@ -1042,7 +1042,7 @@ function toggleSavedPlace(place) {
 */
 function isSavedPlace(place) {
   "use strict";
-  for (var i = 0; i < savedPlaces.length; i++) {
+  for (var i=0, l=savedPlaces.length; i<l; i++) {
     if (savedPlaces[i].place_id === place.place_id) {
       return true;
     }
@@ -1100,7 +1100,7 @@ function addSavedPlace(place) {
 */
 function removeSavedPlace(place) {
   "use strict";
-  for (var i = 0; i < savedPlaces.length; i++) {
+  for (var i=0, l=savedPlaces.length; i<l; i++) {
     if (savedPlaces[i].place_id === place.place_id) {
       savedPlaces.splice(i, 1);
       // Save savedPlaces array to localstorage
@@ -1200,7 +1200,6 @@ function toggleNav() {
 }
 
 ko.applyBindings({
-  "use strict";
   categoryViewModel
 });
 
